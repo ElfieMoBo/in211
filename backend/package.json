@@ -1,0 +1,30 @@
+{
+  "name": "ensta-in211-web-backend",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "dotenv -- nodemon --experimental-modules ./server.js",
+    "start": "dotenv -- node --experimental-modules ./server.js",
+    "lint": "eslint . --fix",
+    "migration:generate": "dotenv -- typeorm --dataSource='./datasource.js' migration:generate --outputJs --pretty migrations/$npm_config_name",
+    "postmigration:generate": "./postmigration.sh",
+    "migration:run": "dotenv -- typeorm --dataSource='./datasource.js' migration:run",
+    "migration:revert": "dotenv -- typeorm --dataSource='./datasource.js' migration:revert"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv-cli": "^7.0.0",
+    "express": "^4.18.2",
+    "morgan": "^1.10.0",
+    "pg": "^8.10.0",
+    "typeorm": "^0.3.12"
+  },
+  "devDependencies": {
+    "eslint": "^8.35.0",
+    "eslint-config-prettier": "^8.7.0",
+    "eslint-plugin-prettier": "^4.2.1",
+    "nodemon": "^2.0.21",
+    "prettier": "^2.8.4"
+  }
+}
