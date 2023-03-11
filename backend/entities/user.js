@@ -1,11 +1,11 @@
-import typeorm from "typeorm";
+import typeorm from 'typeorm';
 
 const User = new typeorm.EntitySchema({
-  name: "User",
+  name: 'User',
   columns: {
     id: {
       primary: true,
-      generated: "uuid",
+      generated: 'uuid',
       type: String,
     },
     email: {

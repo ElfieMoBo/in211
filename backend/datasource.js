@@ -1,21 +1,21 @@
-import { DataSource } from "typeorm";
+import { DataSource } from 'typeorm';
 
 export const appDataSource = new DataSource({
-  type: "postgres",
+  type: 'postgres',
   host: process.env.DATABASE_HOST,
   port: process.env.DATABASE_PORT,
   username: process.env.DATABASE_USER,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_NAME,
   synchronize: false,
-  entities: ["entities/*.js"],
-  migrations: ["migrations/*.js"],
+  entities: ['entities/*.js'],
+  migrations: ['migrations/*.js'],
   cli: {
-    migrationsDir: "migrations",
+    migrationsDir: 'migrations',
   },
   extra: {
     ssl:
-      process.env.NODE_ENV === "production"
+      process.env.NODE_ENV === 'production'
         ? false
         : {
             rejectUnauthorized: false,
