@@ -1,7 +1,6 @@
 import express from "express";
 import logger from "morgan";
 import cors from "cors";
-import path from "path";
 import usersRouter from "./routes/users.js";
 import { routeNotFoundJsonHandler } from "./services/routeNotFoundJsonHandler.js";
 import { jsonErrorHandler } from "./services/jsonErrorHandler.js";
