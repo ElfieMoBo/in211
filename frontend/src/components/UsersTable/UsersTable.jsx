@@ -8,7 +8,7 @@ const useFetchUsers = () => {
 
   useEffect(() => {
     axios
-      .get(`${process.env.REACT_APP_BACKDEND_URL}/users`)
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/users`)
       .then((response) => {
         setUsers(response.data.users);
       })
@@ -25,7 +25,7 @@ function UsersTable() {
   const { users, usersLoadingError } = useFetchUsers();
 
   const deleteUser = (userId) => {
-    axios.delete(`${process.env.REACT_APP_BACKDEND_URL}/users/${userId}`);
+    axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/users/${userId}`);
   };
 
   return (

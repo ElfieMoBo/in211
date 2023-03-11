@@ -30,7 +30,7 @@ const useSaveUser = () => {
     }
 
     axios
-      .post(`${process.env.REACT_APP_BACKDEND_URL}/users/new`, formValues)
+      .post(`${import.meta.env.VITE_BACKDEND_URL}/users/new`, formValues)
       .then(() => {
         displayCreationSuccessMessage();
         setFormValues(DEFAULT_FORM_VALUES);

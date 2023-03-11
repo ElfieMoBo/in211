@@ -1,137 +1,32 @@
 {
-  "name": "react-frontend",
-  "version": "0.1.0",
+  "name": "vite-frontend",
   "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "dev": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "lint": "eslint --fix"
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "lint": "eslint . --fix --ext jsx --ext js"
   },
   "dependencies": {
-    "@testing-library/jest-dom": "^5.16.5",
-    "@testing-library/react": "^14.0.0",
-    "@testing-library/user-event": "^14.4.3",
     "axios": "^1.3.4",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.8.2",
-    "react-scripts": "5.0.1",
     "web-vitals": "^3.1.1"
   },
   "devDependencies": {
-    "eslint": "^8.35.0",
+    "@types/react": "^18.0.27",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react": "^3.1.0",
+    "eslint": "^8.36.0",
     "eslint-config-prettier": "^8.7.0",
     "eslint-config-react-app": "^7.0.1",
     "eslint-plugin-import": "^2.27.5",
     "eslint-plugin-jsx-a11y": "^6.7.1",
     "eslint-plugin-prettier": "^4.2.1",
-    "prettier": "^2.8.4"
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app/jest",
-      "eslint:recommended",
-      "react-app",
-      "plugin:jsx-a11y/recommended",
-      "plugin:prettier/recommended"
-    ],
-    "root": true,
-    "plugins": [
-      "import",
-      "jsx-a11y",
-      "prettier"
-    ],
-    "rules": {
-      "curly": [
-        "error",
-        "all"
-      ],
-      "eqeqeq": [
-        "error",
-        "smart"
-      ],
-      "import/no-extraneous-dependencies": [
-        "error",
-        {
-          "devDependencies": true,
-          "optionalDependencies": false,
-          "peerDependencies": false
-        }
-      ],
-      "no-shadow": [
-        "error",
-        {
-          "hoist": "all"
-        }
-      ],
-      "prefer-const": "error",
-      "import/order": [
-        "error",
-        {
-          "groups": [
-            [
-              "external",
-              "builtin"
-            ],
-            "internal",
-            [
-              "parent",
-              "sibling",
-              "index"
-            ]
-          ]
-        }
-      ],
-      "sort-imports": [
-        "error",
-        {
-          "ignoreCase": true,
-          "ignoreDeclarationSort": true,
-          "ignoreMemberSort": false,
-          "memberSyntaxSortOrder": [
-            "none",
-            "all",
-            "multiple",
-            "single"
-          ]
-        }
-      ],
-      "padding-line-between-statements": [
-        "error",
-        {
-          "blankLine": "always",
-          "prev": "*",
-          "next": "return"
-        }
-      ],
-      "react/no-string-refs": "warn",
-      "react-hooks/rules-of-hooks": "error",
-      "react-hooks/exhaustive-deps": "warn",
-      "prettier/prettier": "error"
-    },
-    "env": {
-      "browser": true,
-      "es6": true,
-      "node": true
-    },
-    "settings": {
-      "react": {
-        "version": "detect"
-      }
-    }
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+    "prettier": "^2.8.4",
+    "vite": "^4.1.0"
   }
 }
