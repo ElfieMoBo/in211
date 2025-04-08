@@ -1,11 +1,11 @@
 .Root-container {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  color: white;
+    width: 100%;
 }
 
 .Root-content {
-  padding: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
 }
