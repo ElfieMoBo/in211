@@ -1,9 +1,0 @@
-.Users-container {
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-}
-
-.Users-container > :not(:last-child) {
-  margin-bottom: 20px;
-}
