@@ -51,7 +51,8 @@ function Home() {
   const [moviesList, setList] = useFetchMovies()
   const [movieGenre, setGenreList] = useFetchGenre()
   const [genreChosen, setGenre] = useState("")
-
+  const sortItem = [{ id: "1", name: "Popularité" }, { id: "2", name: "Likes" }, { id: "3", name: "Date (récent)" }, { id: "4", name: "Date (ancien)" }]
+  const [sortChosen, setSort] = useState("0")
 
   const filterTitle = (movie) => {
     return movie.title.toLowerCase().includes(movieSearch.toLowerCase())
