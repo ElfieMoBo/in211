@@ -57,3 +57,12 @@
   border-radius: 5px;
   margin-bottom: 15px;
 }
+
+.sort-input {
+  font-size: 15px;
+  padding: 4px;
+  border-radius: 5px;
+  margin-bottom: 15px;
+  margin-right: 10px;
+  width: 45%;
+}
