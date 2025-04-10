@@ -64,6 +64,8 @@
   padding: 4px;
   border-radius: 5px;
   margin-bottom: 15px;
+  margin-left: 10px;
+  width: 45%;
 }
 
 .sort-input {

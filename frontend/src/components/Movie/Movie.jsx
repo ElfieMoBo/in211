@@ -14,7 +14,6 @@ function Movie({ movie }) {
             <div className="movie-date">
                 {movie.release_date}
             </div>
-
         </div>
     );
 }
