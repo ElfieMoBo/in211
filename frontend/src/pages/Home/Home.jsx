@@ -64,6 +64,65 @@ function Home() {
       return true
     }
   }
+
+  const sortByItem = (item) => {
+    // Fonction de trie suivant la popularité, le nombre de likes, la date ou l'ordre alphabétique
+    if (item == "1") {
+      // Popularité
+      return (a, b) => {
+        if (parseInt(a.popularity) < parseInt(b.popularity)) {
+          return 1;
+        } else if (parseInt(a.popularity) > parseInt(b.popularity)) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+    } else if (item == "2") {
+      // Likes
+      return (a, b) => {
+        if (parseInt(a.vote_average) < parseInt(b.vote_average)) {
+          return 1;
+        } else if (parseInt(a.vote_average) > parseInt(b.vote_average)) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+    } else if (item == "3") {
+      // Date (ascendante)
+      return (a, b) => {
+        var adate = new Date(a.release_date);
+        var bdate = new Date(b.release_date);
+        if (adate < bdate) {
+          return 1;
+        } else if (adate > bdate) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+    } else if (item == "4") {
+      // Date (ascendante)
+      return (b, a) => {
+        var adate = new Date(a.release_date);
+        var bdate = new Date(b.release_date);
+        if (adate < bdate) {
+          return 1;
+        } else if (adate > bdate) {
+          return -1;
+        } else {
+          return 0;
+        }
+      }
+    } else {
+      // Alphabétique
+      return (a, b) => {
+        return a.title.localeCompare(b.title);
+      }
+    }
+  }
+
   // Définition de l'affichage de la page
   return (
     <div className="container">
@@ -79,6 +138,21 @@ function Home() {
         </input>
         {/* <div>
           Récupération du titre (ok!) : {movieSearch}
+        </div> */}
+      </div>
+      <div className="sort-filter-container">
+        {/* Création d'un menu déroulant pour choisir le genre */}
+        <select
+          className="sort-input"
+          onChange={function (event) { setSort(event.target.value) }}
+        >
+          <option value="0">Trier suivant</option>
+          {sortItem.map(item =>
+            <option key={item.id} value={item.id}>{item.name}</option>
+          )}
+        </select>
+        {/* <div>
+          Récupération du trie (ok!) : {sortChosen}
         </div> */}
 
         {/* Création d'un menu déroulant pour choisir le genre (il faudra en faire un output à part pour pouvoir mettre ce qu'on veut derrière) */}
@@ -113,9 +187,7 @@ function Home() {
               {moviesList
                 .filter(filterTitle)
                 .filter(filterGenre)
-                .sort((a, b) => {
-                  return a.title.localeCompare(b.title);
-                })
+                .sort(sortByItem(sortChosen))
                 .map((movie) => {
                   return <Movie
                     key={movie.id}
