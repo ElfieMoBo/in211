@@ -1,4 +1,3 @@
-import logo from './film.png';
 import './Home.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
@@ -55,10 +54,11 @@ function Home() {
   const [sortChosen, setSort] = useState("0")
 
   const filterTitle = (movie) => {
+    // Fonction de filtrage suivant le titre du film
     return movie.title.toLowerCase().includes(movieSearch.toLowerCase())
   }
-
   const filterGenre = (movie) => {
+    // Fonciton de filtrage suivant le genre du film
     if (genreChosen != "") {
       return movie.genre_ids.map((genre) => { return genre.toString() }).includes(genreChosen.toString())
     } else {
@@ -156,7 +156,7 @@ function Home() {
           Récupération du trie (ok!) : {sortChosen}
         </div> */}
 
-        {/* Création d'un menu déroulant pour choisir le genre (il faudra en faire un output à part pour pouvoir mettre ce qu'on veut derrière) */}
+        {/* Création d'un menu déroulant pour choisir le critère de trie */}
         <select
           className="genre-input"
           onChange={function (event) { setGenre(event.target.value) }}
@@ -166,23 +166,20 @@ function Home() {
             <option key={genre.id} value={genre.id}>{genre.name}</option>
           )}
         </select>
-        {/* <div>
-          Récupération du genre (ok!) : {genreChosen}
-        </div> */}
       </div>
 
       <div className="search-results-container">
         {/* Affichage des films possibles sous forme de grille */}
-          <p className="movie-annonce">
-            Films et séries
-          </p>
+        <p className="movie-annonce">
+          Films et séries
+        </p>
         {/* Trie des films selon plusieurs critères (titre, genre)
             .filter(fonction) -> renvoie un sous-tableau avec les éléments qui sont assigné à true par la fonction 
             .map(fonction) -> applique la fonction à chaque élément du tableau */}
         {moviesList
           .filter(filterTitle)
           .filter(filterGenre)
-          .length!=0
+          .length != 0
           ? (
             <div className="movies-list">
               {moviesList
