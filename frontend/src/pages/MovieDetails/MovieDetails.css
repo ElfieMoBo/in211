@@ -4,6 +4,7 @@
     justify-content: flex-start;
     align-items: space-around;
     width: 95%;
+    padding-top: 10px;
 }
 
 .movie-visual-container {
@@ -86,6 +87,26 @@
     padding: 10px;
     margin: 5px;
     font-size: 20px;
+}
+
+.movie-detail-cast-distribution {
+    padding-left: 10px;
+    margin: 5px;
+    font-size: 15px;
+}
+
+movie-detail-voirplus-button {
+    /* background-color: rgb(48, 176, 180);
+    color: blue; */
+    font-size: 20px;
+    padding: 4px;
+    border-radius: 50px;
+    margin-bottom: 20px;
+}
+
+.movie-detail-visible-text {
+    font-weight: 500;
+    color: rgba(190, 255, 175, 0.8);
 }
 
 .movie-detail-star {
