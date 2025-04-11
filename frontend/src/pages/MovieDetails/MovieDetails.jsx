@@ -64,10 +64,12 @@ function MovieDetails() {
                 (Math.floor(movieDetails.runtime / 60) + "h" + movieDetails.runtime % 60 + "min") : movieDetails.runtime % 60 + "min"}
             </p>
             {/* <hr></hr> */}
-            {movieDetails.genres
-              .map((genre) => {
-                return <p className="movie-detail-genre">{genre.name}</p>
-              })
+            {movieDetails.genres ? (
+              movieDetails
+                .genres
+                .map((genre) => {
+                  return <p className="movie-detail-genre">{genre.name}</p>
+                })) : ''
             }
             {movieDetails.adult
               ? (
@@ -80,33 +82,59 @@ function MovieDetails() {
           </div>
           <div className="movie-detail-cast-distribution">
             <p className="movie-detail-acteur">
-              Avec :
-              {movieCast.cast
-                .map((acteur) => {
-                  return " " + acteur.name + " (" + acteur.character + "),"
-                })
+              <span className="movie-detail-visible-text">
+                Avec :
+              </span>
+              {movieCast.cast ? (
+                movieCast.cast
+                  .filter((actor) => {
+                    return actor.order <= 2
+                  })
+                  .map((acteur) => {
+                    return " " + acteur.name + " (" + acteur.character + "),"
+                  })) : ''
               }
+              
+              {/* <button id="movie-detail-voirplus-button">Voir plus</button>
+              <div id="movie-detail-allcasting">
+                <span className="movie-detail-visible-text">
+                  Avec :
+                </span>
+                {movieCast.cast ? (
+                  movieCast.cast
+                    .map((acteur) => {
+                      return " " + acteur.name + " (" + acteur.character + "),"
+                    })) : ''
+                }
+              </div> */}
 
               {/* Essayer de n'afficher que trois/quatre noms puis avoir un bouton voir plus + enlever le dernier , */}
             </p>
             <p className="movie-detail-realisateur">
-              Réalisateur :
-              {movieCast
-                .cast
-              //   .filter((crew) => {
-              //     return crew.known_for_department.toLowerCase().includes("directing".toLowerCase()
-              // })
-                .map((crew) => {
-                  return " " + crew.name
-                })
+              <span className="movie-detail-visible-text">
+                Réalisateur :
+              </span>
+              {movieCast.crew ? (
+                movieCast
+                  .crew
+                  .filter((crew) => {
+                    return crew.job == "Director"
+                  })
+                  .map((crew) => {
+                    return " " + crew.name
+                  })) : ''
               }
             </p>
             <p className="movie-detail-distribution">
-              Distribution :
-              {movieDetails.production_companies
-                .map((companie) => {
-                  return " " + companie.name + ", "
-                })
+              <span className="movie-detail-visible-text">
+                Distribution :
+              </span>
+              {movieDetails.production_companies ? (
+                movieDetails
+                  .production_companies
+                  .map((companie) => {
+                    return " " + companie.name
+                  })) : ''
               }
             </p>
           </div>
@@ -131,7 +159,7 @@ function MovieDetails() {
             <input
               type="text"
               className="movie-detail-comment"
-              placeholder="Commentaire"
+              placeholder="Commentaire (à voir plus tard)"
             >
             </input>
           </div>
