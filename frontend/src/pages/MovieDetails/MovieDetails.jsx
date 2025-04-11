@@ -41,6 +41,26 @@ const useFetchCast = (movieid) => {
   return [movieCast, setCast];
 }
 
+// const casting = document.getElementById("movie-detail-allcasting");
+// const voirplus = document.getElementById("movie-detail-voirplus-button");
+
+// function supportsPopover() {
+//   return HTMLElement.prototype.hasOwnProperty("popover");
+// }
+
+// if (supportsPopover()) {
+//   // Définit l'élément <div> comme étant un popover automatique
+//   casting.popover = "auto";
+//   // Définit le bouton comme étant le contrôle du popover
+//   voirplus.popoverTargetElement = popover;
+
+//   // Définit que le bouton peut afficher/masquer le popover
+//   voirplus.popoverTargetAction = "toggle";
+// } else {
+//   casting.textContent = "L'API Popover n'est pas prise en charge.";
+//   voirplus.hidden = true;
+// }
+
 
 function MovieDetails() {
   const params = useParams()
