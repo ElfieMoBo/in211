@@ -6,7 +6,7 @@
 
 * [x] ETQU, sur la page d'accueil je peux faire une recherche par nom sur les films
 
-* [ ] ETQU, sur la page d'accueil quand je clique sur un film, j'arrive sur une page dédiée qui me présente les détails du film / ETQU, sur la page d'accueil je peux directement voir les détails d'un film
+* [x] ETQU, sur la page d'accueil quand je clique sur un film, j'arrive sur une page dédiée qui me présente les détails du film / ETQU, sur la page d'accueil je peux directement voir les détails d'un film
 
 * [ ] ETQU, sur la page de détails d'un film, je peux ajouter un commentaire qui contient une note au nom d’un user
 
