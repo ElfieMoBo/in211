@@ -2,6 +2,7 @@ import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import usersRouter from './routes/users.js';
+import moviesRouter from './routes/movies.js'
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
@@ -24,6 +25,7 @@ appDataSource
       res.send('Hello from Express!');
     });
     apiRouter.use('/users', usersRouter);
+    apiRouter.use('/movies', moviesRouter);
 
     // Register API router
     app.use('/api', apiRouter);
