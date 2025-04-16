@@ -17,7 +17,7 @@ const Movie = new typeorm.EntitySchema({
   },
 });
 
-/* Be careful when creating a new TABLE:
+/* Be careful when creating/updating a new TABLE:
       - have to: run npm run migration:generate --name=nameOfTheMigraiton
       - have to: run npm migration:run <3 (or else, the table would not be created)
 */
