@@ -1,14 +1,25 @@
 <span style="color:rgb(120, 150, 50);"><font size="5">**Fonctionnalités demandées**</span></font>
 
-* [x] ETQU, sur la page d'accueil je vois une liste de 100 films ou plus triés selon un critère au choix
+* [ ] ETQU, sur la page d'accueil je vois une liste de 100 films ou plus triés selon un critère au choix
+    * [ ] Avoir encore plus de films disponibles ?
+    * [ ] N'afficher qu'un certain nombre de films et avoir un système de pages pour en afficher plus
+    * [ ] Revoir les critères pour mieux les trier
 
 * [ ] ETQU, j'ai accès à une page ou je peux manuellement ajouter des films sur mon site
+    * [ ] Reconsturire la base de données avec les caractère dont je me suis servie dans l'affichage
+    * [ ] Protéger le site des injection SQL ?
+    * [ ] Rendre l'affichage meilleur + avoir un lien direct jusqu'à cette page sur la page principale
 
 * [x] ETQU, sur la page d'accueil je peux faire une recherche par nom sur les films
 
-* [x] ETQU, sur la page d'accueil quand je clique sur un film, j'arrive sur une page dédiée qui me présente les détails du film / ETQU, sur la page d'accueil je peux directement voir les détails d'un film
+* [ ] ETQU, sur la page d'accueil quand je clique sur un film, j'arrive sur une page dédiée qui me présente les détails du film / ETQU, sur la page d'accueil je peux directement voir les détails d'un film
+    * [x] Afficher une belle mise en page
+    * [ ] Pour les casting, n'afficher que les deux/trois premiers acteurs et avoir possibilité d'afficher plus + gérer la denirère virgules
+    * [ ] Essayer d'afficher le système d'étoiles ?
 
-* [ ] ETQU, sur la page de détails d'un film, je peux ajouter un commentaire qui contient une note au nom d’un user
+* [ ] ETQU, sur la page de détails d'un film, je peux ajouter un commentaire qui contient une note au nom d’un user 
+    * [ ] Regarder comment stocker les commentaires 
+    * [ ] Protéger contre les XSS ?
 
 * [x] ETQU, sur la page d’accueil je vois une liste de films triés par nombre de likes
 
