@@ -11,9 +11,9 @@ function Movie({ movie }) {
             <div className="movie-title" >
                 {movie.title}
             </div>
-            <div className="movie-date">
+            {/* <div className="movie-date">
                 {movie.release_date}
-            </div>
+            </div> */}
         </div>
     );
 }

@@ -12,7 +12,7 @@ const Movie = new typeorm.EntitySchema({
       type: String,
       unique: true,
     },
-    date: { type: String },
+    release_date: { type: String },
     overview: { type: String },
   },
 });
