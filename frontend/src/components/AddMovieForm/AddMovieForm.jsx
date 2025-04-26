@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './AddMovieForm.css';
@@ -77,39 +76,81 @@ function AddMovieForm() {
     const [genre, setGenre] = useState([]);
 
     return (
-        <div>
+        <div className="container">
             <form
                 className="add-movie-form"
                 onSubmit={(event) => saveMovie(event, formValues, setFormValues)}
             >
-                <input
-                    className="add-movie-input"
-                    type="title"
-                    placeholder="Title"
-                    value={formValues.title}
-                    onChange={(event) =>
-                        setFormValues({ ...formValues, title: event.target.value })
-                    }
-                />
-                <input
-                    className="add-movie-input"
-                    placeholder="Release date"
-                    value={formValues.date}
-                    onChange={(event) =>
-                        // console.log(event.target.value)
-                        setFormValues({ ...formValues, date: event.target.value })
-                    }
-                />
-                <input
-                    className="add-movie-input"
-                    placeholder="Overview"
-                    value={formValues.overview}
-                    onChange={(event) =>
-                        setFormValues({ ...formValues, overview: event.target.value })
-                    }
-                />
-                <button className="add-movie-button" type="submit">
-                    Add a movie
+                <div className="add-movie-top">
+                    <input
+                        className="add-movie-title"
+                        type="text"
+                        placeholder="Titre"
+                        value={formValues.title}
+                        onChange={(event) =>
+                            setFormValues({ ...formValues, title: event.target.value })
+                        }
+                    />
+                    <textarea
+                        className="add-movie-overview"
+                        placeholder="Synopsis"
+                        value={formValues.overview}
+                        onChange={(event) =>
+                            setFormValues({ ...formValues, overview: event.target.value })
+                        }
+                    />
+                </div>
+                <div className="add-movie-middle">
+                    <div className="add-movie-container" >
+                        <p className="add-movie-text"> Date de sortie : </p>
+                        <input
+                            className="add-movie-date"
+                            type="date"
+                            placeholder="Release date"
+                            value={formValues.date}
+                            onChange={(event) =>
+                                // console.log(event.target.value)
+                                setFormValues({ ...formValues, date: event.target.value })
+                            }
+                        />
+                    </div>
+
+                    <div className="add-movie-container" >
+                        <p className="add-movie-text"> Durée : </p>
+                        <input
+                            className="add-movie-runtime"
+                            type="number"
+                            placeholder="Durée (min)"
+                        // value={formValues.runtime}
+                        // onChange={(event) =>
+                        //     // console.log(event.target.value)
+                        //     setFormValues({ ...formValues, runtime: event.target.value })
+                        // }
+                        />
+                    </div>
+
+                    <div className="add-movie-container" >
+                        <p className="add-movie-text"> Contenu pour adulte : </p>
+                        <input
+                            className="add-movie-adult"
+                            type="checkbox"
+                        />
+                    </div>
+                </div>
+                <div className="add-movie-bottom">
+                    <span className="add-movie-text"> Genres :</span>
+                    <select
+                        className="add-movie-genre"
+                        onChange={function (event) { setGenre(event.target.value) }}
+                    >
+                        <option value="">Filtrer par genre</option>
+                        {allGenre.map(genre =>
+                            <option key={genre.id} value={genre.id}>{genre.name}</option>
+                        )}
+                    </select>
+                </div>
+                <button className="add-a-movie-button" type="submit">
+                    Add the movie
                 </button>
             </form>
             {movieSuccess !== null && (
