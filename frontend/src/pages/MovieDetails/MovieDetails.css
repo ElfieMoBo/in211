@@ -109,6 +109,18 @@ movie-detail-voirplus-button {
     color: rgba(190, 255, 175, 0.8);
 }
 
+.sup-movie-button {
+    background-color: rgba(157, 82, 165, 0.8);
+    font-weight: bolder;
+    font-size: 20px;
+    border-radius: 15px;
+    padding-left: 10px;
+    margin: 5px;
+    margin-top: 10px;
+    width: 140px;
+    height: 30px;
+}
+
 .movie-detail-star {
 
     padding: 1%;
