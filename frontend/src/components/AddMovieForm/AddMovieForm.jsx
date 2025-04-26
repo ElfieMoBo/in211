@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import axios from 'axios';
+import { useEffect, useState } from 'react';
 import './AddMovieForm.css';
 
 
@@ -49,9 +50,31 @@ const registerMovie = () => {
     return { saveMovie, movieError, movieSuccess };
 };
 
+const useFetchGenre = () => {
+    // Fonction qui permet de récupérer une liste des genres des films possibles
+    const [moviesGenre, setGenreList] = useState([])
+
+    useEffect(() => {
+        axios
+            .get('https://api.themoviedb.org/3/genre/movie/list?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb')
+            .then((reponse) => {
+                setGenreList(reponse.data.genres)
+                console.log(reponse)
+            })
+            .catch((error) => {
+                console.log(error)
+            })
+    }, []);
+
+    return [moviesGenre, setGenreList];
+}
+
 function AddMovieForm() {
     const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
     const { saveMovie, movieError, movieSuccess } = registerMovie();
+    const [allGenre, setGenreList] = useFetchGenre();
+    // For now, it's just setGenre but I want to addGenre [] -> ['id1'] -> ['id1', 'id2']
+    const [genre, setGenre] = useState([]);
 
     return (
         <div>
