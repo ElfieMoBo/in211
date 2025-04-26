@@ -1,0 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-content: flex-start;
+  width: 95%;
+  padding: 10px;
+}
+
+.form-title {
+  text-align: justify;
+  font-weight: bold;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 25px;
+}
+
+.form-container-box {
+  display: flex;
+  border: thick double rgba(190, 255, 175, 0.5);
+  width: 95%
+}
