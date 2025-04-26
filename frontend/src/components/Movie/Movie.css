@@ -1,3 +1,16 @@
+.movie-affiche {
+  padding-bottom: 10%;
+}
+
+
+.movie-poster {
+  border-radius: 5px;
+  justify-content: center;
+  align-items: center;
+  width: 300px;
+  height: 450px;
+}
+
 .movie-title {
   display: flex;
   margin-top: 5px;
@@ -16,12 +29,4 @@
   margin-bottom: 5px;
   margin-bottom: 8px;
   justify-content: center;
-}
-
-.movie-poster {
-  border-radius: 5px;
-  justify-content: center;
-  align-items: center;
-  width: 300px;
-  height: 450px;
 }
