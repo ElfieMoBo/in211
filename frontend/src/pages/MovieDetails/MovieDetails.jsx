@@ -158,6 +158,13 @@ function MovieDetails() {
               }
             </p>
           </div>
+          <input
+          className="sup-movie-button"
+          // onClick={() => navigate("/delete")}
+          type="button"
+          value="Supprimer"
+          title="Supprimer ce film de la base de données"
+        />
         </div>
       </div>
 

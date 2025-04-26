@@ -30,7 +30,7 @@ router.post('/new', function (req, res) {
         })
 });
 
-router.delete('/:movieID', function (req, res) {
+router.delete('/delete-a-movie/:movieID', function (req, res) {
     appDataSource
         .getRepository(Movie)
         .delete({ id: req.params.movieID })
