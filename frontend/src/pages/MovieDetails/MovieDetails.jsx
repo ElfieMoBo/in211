@@ -183,12 +183,11 @@ function MovieDetails() {
               placeholder="Nom d'utilisateur"
             >
             </input>
-            <input
-              type="text"
+            <textarea
               className="movie-detail-comment"
               placeholder="Commentaire (à voir plus tard)"
             >
-            </input>
+            </textarea>
           </div>
           <div className="movide-detail-ancien-commentaire">
             <p>Old Comment</p>
