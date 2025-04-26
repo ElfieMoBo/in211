@@ -6,9 +6,11 @@
     * [ ] Revoir les critères pour mieux les trier
 
 * [ ] ETQU, j'ai accès à une page ou je peux manuellement ajouter des films sur mon site
-    * [ ] Reconsturire la base de données avec les caractère dont je me suis servie dans l'affichage
+    * [ ] Reconsturire la base de données avec les critères dont je me suis servie dans l'affichage
     * [ ] Protéger le site des injection SQL ?
-    * [ ] Rendre l'affichage meilleur + avoir un lien direct jusqu'à cette page sur la page principale
+    * [x] Rendre l'affichage meilleur 
+    * [x] Avoir un lien direct jusqu'à cette page sur la page principale
+    * [ ] Gérer les genres + qu'est-ce qu'il faut faire pour le cast/crew ?
 
 * [x] ETQU, sur la page d'accueil je peux faire une recherche par nom sur les films
 
