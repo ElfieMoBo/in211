@@ -1,6 +1,7 @@
 import './Home.css';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 import Movie from '../../components/Movie/Movie';
 
@@ -53,6 +54,8 @@ function Home() {
   const sortItem = [{ id: "1", name: "Popularité" }, { id: "2", name: "Likes" }, { id: "3", name: "Date (récent)" }, { id: "4", name: "Date (ancien)" }]
   const [sortChosen, setSort] = useState("0")
 
+  const navigate = useNavigate()
+
   const filterTitle = (movie) => {
     // Fonction de filtrage suivant le titre du film
     return movie.title.toLowerCase().includes(movieSearch.toLowerCase())
@@ -91,7 +94,7 @@ function Home() {
         }
       }
     } else if (item == "3") {
-      // Date (ascendante)
+      // Date (descendante)
       return (a, b) => {
         var adate = new Date(a.release_date);
         var bdate = new Date(b.release_date);
@@ -134,12 +137,8 @@ function Home() {
           className="text-input"
           placeholder="Rechercher un film"
           onChange={function (event) { setSearch(event.target.value) }}
-        // Les scripts js sont entre {}
         >
         </input>
-        {/* <div>
-          Récupération du titre (ok!) : {movieSearch}
-        </div> */}
       </div>
       <div className="sort-filter-container">
         {/* Création d'un menu déroulant pour choisir le genre */}
@@ -152,9 +151,6 @@ function Home() {
             <option key={item.id} value={item.id}>{item.name}</option>
           )}
         </select>
-        {/* <div>
-          Récupération du trie (ok!) : {sortChosen}
-        </div> */}
 
         {/* Création d'un menu déroulant pour choisir le critère de trie */}
         <select
@@ -166,6 +162,14 @@ function Home() {
             <option key={genre.id} value={genre.id}>{genre.name}</option>
           )}
         </select>
+        {/* Création d'un boutton pour ajouter un film */}
+        <input
+          className="add-movie-button"
+          onClick={() => navigate("/add-a-movie")}
+          type="button"
+          value="+"
+          title="Ajouter un nouveau film"
+        />
       </div>
 
       <div className="search-results-container">
