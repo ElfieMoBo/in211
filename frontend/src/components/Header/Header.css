@@ -1,14 +1,29 @@
 .Header-container {
   display: flex;
   flex-direction: row;
-  /* background-color: rgb(45, 70, 20); */
+  background-color: rgb(45, 70, 20);
   color: rgb(200, 210, 180);
-  justify-content: center;
+  justify-content: space-between;
   font-size: calc(10px + 2vmin);
+  padding: 5px;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+.right {
+  display: flex;
+  flex-direction: row;
 }
 
 .Header-container> :not(:last-child) {
   margin-right: 10px;
+}
+
+.header-icon {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(200, 210, 180);
+  padding-top: 5px;
+  padding-left: 10px;
 }
 
 .Link {
@@ -16,10 +31,11 @@
   font-weight: 700;
   color: rgb(200, 210, 180);
   padding-top: 5px;
-  padding-bottom: 10px;
   padding-left: 10px;
-<<<<<<< HEAD
+  <<<<<<< HEAD
 }
+
 =======
 }
->>>>>>> 40d490b80664bf454d4830fe9d8372027079fafb
+
+>>>>>>>40d490b80664bf454d4830fe9d8372027079fafb
