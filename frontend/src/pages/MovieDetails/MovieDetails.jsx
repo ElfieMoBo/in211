@@ -72,18 +72,14 @@ function MovieDetails() {
                 (Math.floor(movieDetails.runtime / 60) + "h" + movieDetails.runtime % 60 + "min") : movieDetails.runtime % 60 + "min"}
             </p>
             {/* <hr></hr> */}
-            {movieDetails.genres ? (
+            {/* {movieDetails.genres ? (
               movieDetails
                 .genres
                 .map((genre) => {
                   return <p className="movie-detail-genre">{genre.name}</p>
                 })) : ''
-            }
-            {movieDetails.adult
-              ? (
-                <p className="movie-detail-age"> 18+ </p>
-              ) : <p className="movie-detail-age"> 7+ </p>
-            }
+            } */}
+            <p className="movie-detail-age"> {movieDetails.limited_age}+ </p>
           </div>
           <div className="movie-detail-overview">
             {movieDetails.overview}
