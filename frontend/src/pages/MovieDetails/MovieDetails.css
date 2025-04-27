@@ -96,18 +96,27 @@
     font-size: 15px;
 }
 
-movie-detail-voirplus-button {
-    /* background-color: rgb(48, 176, 180);
-    color: blue; */
-    font-size: 20px;
-    padding: 4px;
-    border-radius: 50px;
-    margin-bottom: 20px;
-}
-
 .movie-detail-visible-text {
     font-weight: 500;
     color: rgba(190, 255, 175, 0.8);
+}
+
+.add-note-movie-button {
+    background-color: rgba(190, 255, 175, 0.8);
+    font-weight: bolder;
+    font-size: 20px;
+    border-radius: 15px;
+    margin: 5px;
+    margin-top: 10px;
+    width: 100px;
+    height: 30px;
+}
+
+.movie-sup-container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    width: 95%;
 }
 
 .sup-movie-button {
