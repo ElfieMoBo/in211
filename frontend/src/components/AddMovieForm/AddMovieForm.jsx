@@ -5,12 +5,12 @@ import './AddMovieForm.css';
 
 const DEFAULT_FORM_VALUES = {
     title: '',
-    date: '',
+    release_date: new Date(),
     overview: '',
     // poster_path: '',
     // genre_ids: [],
-    // limited_age: '',
-    // runtime: '',
+    limited_age: 7,
+    runtime: 0,
     // casting: [],
 };
 
@@ -107,10 +107,9 @@ function AddMovieForm() {
                             className="add-movie-date"
                             type="date"
                             placeholder="Release date"
-                            value={formValues.date}
+                            value={formValues.release_date}
                             onChange={(event) =>
-                                // console.log(event.target.value)
-                                setFormValues({ ...formValues, date: event.target.value })
+                                setFormValues({ ...formValues, release_date: event.target.value })
                             }
                         />
                     </div>
@@ -120,20 +119,27 @@ function AddMovieForm() {
                         <input
                             className="add-movie-runtime"
                             type="number"
+                            min="0"
+                            max="240"
                             placeholder="Durée (min)"
-                        // value={formValues.runtime}
-                        // onChange={(event) =>
-                        //     // console.log(event.target.value)
-                        //     setFormValues({ ...formValues, runtime: event.target.value })
-                        // }
+                            value={formValues.runtime}
+                            onChange={(event) =>
+                                setFormValues({ ...formValues, runtime: event.target.value })
+                            }
                         />
                     </div>
 
                     <div className="add-movie-container" >
-                        <p className="add-movie-text"> Contenu pour adulte : </p>
+                        <p className="add-movie-text"> Âge limite : </p>
                         <input
-                            className="add-movie-adult"
-                            type="checkbox"
+                            className="add-movie-age"
+                            type="number"
+                            min="7"
+                            max="18"
+                            value={formValues.limited_age}
+                            onChange={(event) =>
+                                setFormValues({ ...formValues, limited_age: event.target.value })
+                            }
                         />
                     </div>
                 </div>
