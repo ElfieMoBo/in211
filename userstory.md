@@ -10,8 +10,9 @@
     * [ ] Protéger le site des injection SQL ?
     * [x] Rendre l'affichage meilleur 
     * [x] Avoir un lien direct jusqu'à cette page sur la page principale
-    * [ ] Gérer les genres + qu'est-ce qu'il faut faire pour le cast/crew ?
-
+    * [ ] Gérer les genres
+    * [x] Suppression du film
+ 
 * [x] ETQU, sur la page d'accueil je peux faire une recherche par nom sur les films
 
 * [ ] ETQU, sur la page d'accueil quand je clique sur un film, j'arrive sur une page dédiée qui me présente les détails du film / ETQU, sur la page d'accueil je peux directement voir les détails d'un film
