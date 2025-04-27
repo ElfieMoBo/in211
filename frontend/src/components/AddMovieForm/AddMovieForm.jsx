@@ -169,9 +169,11 @@ function AddMovieForm() {
                             }
                         /> */}
                 </div>
+                <div className="button-container">
                 <button className="add-a-movie-button" type="submit">
-                    Add the movie
+                        Ajouter un film
                 </button>
+                </div>
             </form>
             {movieSuccess !== null && (
                 <div className="movie-creation-success">{movieSuccess}</div>
