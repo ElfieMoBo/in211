@@ -12,14 +12,12 @@ const Movie = new typeorm.EntitySchema({
       type: String,
       unique: true,
     },
-    release_date: { type: String },
+    release_date: { type: Date },
     overview: { type: String },
+    runtime: { type: Number },
+    limited_age: { type: Number },
     // poster_path: { type: String },
     // genre_ids: { type: Array },
-    // runtime: { type: String },
-    // limited_age: { type: String },
-    // production_companie: { type: Array },
-    // casting: { type: Array },
   },
 });
 
