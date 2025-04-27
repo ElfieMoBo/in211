@@ -6,9 +6,35 @@ import Movie from '../entities/movies.js';
 const router = express.Router();
 
 router.get("/", function (req, res) {
-    res.send([]);
-    console.log("testing: don't know how to log res...");
+    appDataSource
+        .getRepository(Movie)
+        .find({})
+        .then(function (movies) {
+            res.json({ results : movies })
+        })
+        .catch(function (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Error : no access to the data base' });
+        });
 });
+
+router.get("/get-a-movie/:movieID", function (req, res) {
+    appDataSource
+        .getRepository(Movie)
+        .find({
+            where: {
+                id: req.params.movieID
+            }
+        })
+        .then(function (movies) {
+            res.json({ results: movies })
+        })
+        .catch(function (error) {
+            console.error(error);
+            res.status(500).json({ message: 'Error : no access to the data base' });
+});
+});
+
 
 router.post('/new-movie', function (req, res) {
     const movieRepository = appDataSource.getRepository(Movie);

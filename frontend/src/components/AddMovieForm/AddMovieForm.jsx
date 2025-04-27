@@ -35,7 +35,7 @@ const registerMovie = () => {
         }
 
         axios
-            .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/new`, formValues)
+            .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/new-movie`, formValues)
             .then(() => {
                 displaySuccessMessage();
                 setFormValues(DEFAULT_FORM_VALUES);
