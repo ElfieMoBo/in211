@@ -28,44 +28,6 @@ const useFetchDetails = (movieID) => {
   return [movieDetails, setDetails];
 }
 
-const useFetchCast = (movieid) => {
-  // Fonction qui permet de récupérer les détails d'un film grâce à son id
-  const [movieCast, setCast] = useState([])
-
-  useEffect(() => {
-    axios
-      .get('https://api.themoviedb.org/3/movie/' + movieid + '/credits?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb')
-      .then((reponse) => {
-        setCast(reponse.data)
-        console.log(reponse.data)
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, []);
-
-  return [movieCast, setCast];
-}
-
-// const casting = document.getElementById("movie-detail-allcasting");
-// const voirplus = document.getElementById("movie-detail-voirplus-button");
-
-// function supportsPopover() {
-//   return HTMLElement.prototype.hasOwnProperty("popover");
-// }
-
-// if (supportsPopover()) {
-//   // Définit l'élément <div> comme étant un popover automatique
-//   casting.popover = "auto";
-//   // Définit le bouton comme étant le contrôle du popover
-//   voirplus.popoverTargetElement = popover;
-
-//   // Définit que le bouton peut afficher/masquer le popover
-//   voirplus.popoverTargetAction = "toggle";
-// } else {
-//   casting.textContent = "L'API Popover n'est pas prise en charge.";
-//   voirplus.hidden = true;
-// }
 
 
 function MovieDetails() {
@@ -93,9 +55,13 @@ function MovieDetails() {
   // Définition de l'affichage de la page MovieDetails
   return (
     <div className="container">
-      {/* Création du visuel : affiche, titre, genre, date, résumé, cast, distribution */}
+      {/* Création du visuel : affiche, titre, genre, date, résumé */}
       <div className="movie-visual-container">
-        <img src={"https://image.tmdb.org/t/p/w300" + movieDetails.poster_path} className="movie-detail-poster" alt="logo"
+        <img
+          src="/../Home/film.png"
+          className="movie-detail-poster" alt="logo"
+          width="300"
+          height="400"
         />
         <div className="movie-lexical-container">
           <div className='movie-detail-title'>{movieDetails.title}</div>
@@ -122,64 +88,16 @@ function MovieDetails() {
           <div className="movie-detail-overview">
             {movieDetails.overview}
           </div>
-          <div className="movie-detail-cast-distribution">
-            <p className="movie-detail-acteur">
-              <span className="movie-detail-visible-text">
-                Avec :
-              </span>
-              {movieCast.cast ? (
-                movieCast.cast
-                  .filter((actor) => {
-                    return actor.order <= 2
-                  })
-                  .map((acteur) => {
-                    return " " + acteur.name + " (" + acteur.character + "),"
-                  })) : ''
-              }
-              
-              {/* <button id="movie-detail-voirplus-button">Voir plus</button>
-              <div id="movie-detail-allcasting">
-                <span className="movie-detail-visible-text">
-                  Avec :
-                </span>
-                {movieCast.cast ? (
-                  movieCast.cast
-                    .map((acteur) => {
-                      return " " + acteur.name + " (" + acteur.character + "),"
-                    })) : ''
-                }
-              </div> */}
-
-              {/* Essayer de n'afficher que trois/quatre noms puis avoir un bouton voir plus + enlever le dernier , */}
-            </p>
-            <p className="movie-detail-realisateur">
-              <span className="movie-detail-visible-text">
-                Réalisateur :
-              </span>
-              {movieCast.crew ? (
-                movieCast
-                  .crew
-                  .filter((crew) => {
-                    return crew.job == "Director"
-                  })
-                  .map((crew) => {
-                    return " " + crew.name
-                  })) : ''
-              }
-            </p>
-            <p className="movie-detail-distribution">
-              <span className="movie-detail-visible-text">
-                Distribution :
-              </span>
-              {movieDetails.production_companies ? (
-                movieDetails
-                  .production_companies
-                  .map((companie) => {
-                    return " " + companie.name
-                  })) : ''
-              }
-            </p>
-          </div>
+          <input
+            className="add-note-movie-button"
+            onClick={() => addingNote(movieDetails.id)}
+            type="button"
+            value="+ Note"
+            title="Ajouter un commentaire sur le film"
+          />
+        </div>
+      </div>
+      <div className="movie-sup-container">
           <input
           className="sup-movie-button"
           onClick={() => confirmDelete(movieDetails.id)}
