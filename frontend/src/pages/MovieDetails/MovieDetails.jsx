@@ -94,21 +94,20 @@ function MovieDetails() {
         </div>
       </div>
       <div className="movie-sup-container">
-          <input
+        <input
           className="sup-movie-button"
           onClick={() => confirmDelete(movieDetails.id)}
           type="button"
           value="Supprimer"
           title="Supprimer ce film de la base de données"
         />
-        </div>
       </div>
 
       {/* Création d'une section commentaires */}
-      <div className="movie-detail-espace-commentaire">
+      {/* <div className="movie-detail-espace-commentaire">
         <div className="movie-detail-bandeau">
           <p className="movie-detail-"> Laisser un commentaire : </p>
-          {/* <p className="movie-detail-star">{movieDetails.vote_average}</p> */}
+          <p className="movie-detail-star">{movieDetails.vote_average}</p> 
         </div>
 
         <div className="movie-detail-commentaire">
@@ -129,7 +128,7 @@ function MovieDetails() {
             <p>Old Comment</p>
           </div>
         </div>
-      </div>
+      </div> */}
     </div >
   );
 }
