@@ -1,9 +1,15 @@
 import './MovieDetails.css'
 import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-const useFetchDetails = (movieid) => {
+const deleteMovieID = (movieID) => {
+  axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/movies/delete-a-movie/${movieID}`);
+};
+
+
+const useFetchDetails = (movieID) => {
   // Fonction qui permet de récupérer les détails d'un film grâce à son id
   const [movieDetails, setDetails] = useState([])
 
@@ -65,8 +71,24 @@ const useFetchCast = (movieid) => {
 function MovieDetails() {
   const params = useParams()
   const [movieDetails, setDetails] = useFetchDetails(params.id)
-  const [movieCast, setCast] = useFetchCast(params.id)
-  var date = new Date(movieDetails.release_date);
+  console.log(movieDetails);
+  // const [movieCast, setCast] = useFetchCast(params.id)
+  var date = new Date(movieDetails.release_date)
+  const navigate = useNavigate()
+
+  const confirmDelete = (movieID) => {
+    if (confirm("La suppression est définitive, êtes-vous sûre de vouloir supprimer ce film ?")) {
+      deleteMovieID(movieID)
+      navigate('/');
+    }
+  }
+  const addingNote = (movieID) => {
+      <textarea
+        className="movie-detail-comment"
+        placeholder="Commentaire (à voir plus tard)"
+      >
+      </textarea>
+  }
 
   // Définition de l'affichage de la page MovieDetails
   return (
@@ -160,7 +182,7 @@ function MovieDetails() {
           </div>
           <input
           className="sup-movie-button"
-          // onClick={() => navigate("/delete")}
+          onClick={() => confirmDelete(movieDetails.id)}
           type="button"
           value="Supprimer"
           title="Supprimer ce film de la base de données"
