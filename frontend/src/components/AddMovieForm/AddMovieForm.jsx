@@ -18,7 +18,7 @@ const registerMovie = () => {
     const [movieError, setMovieError] = useState(null);
     const [movieSuccess, setMovieSuccess] = useState(null);
     const displaySuccessMessage = () => {
-        setMovieSuccess('New movie created successfully');
+        setMovieSuccess('Nouveau film ajouté');
         setTimeout(() => {
             setMovieSuccess(null);
         }, 3000);
@@ -30,7 +30,7 @@ const registerMovie = () => {
 
         setMovieError(null);
         if (formValues.title === '') {
-            console.error('Missing title, this field is required');
+            console.error('Aucun titre renseignée : le champ est obligatoire');
             return;
         }
 
@@ -41,7 +41,7 @@ const registerMovie = () => {
                 setFormValues(DEFAULT_FORM_VALUES);
             })
             .catch((error) => {
-                setMovieError('An error occured while registering a new movie.');
+                setMovieError("Une erreur est survenue lors de l'enregistrement du film.");
                 console.error(error);
             });
     };
