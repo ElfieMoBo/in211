@@ -9,10 +9,10 @@ const useFetchDetails = (movieid) => {
 
   useEffect(() => {
     axios
-      .get('https://api.themoviedb.org/3/movie/' + movieid + '?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb')
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/get-a-movie/${movieID}`)
       .then((reponse) => {
-        setDetails(reponse.data)
-        console.log(reponse.data)
+        setDetails(reponse.data.results[0])
+        console.log(reponse.data.results[0])
       })
       .catch((error) => {
         console.log(error)
