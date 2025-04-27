@@ -71,7 +71,7 @@ const useFetchGenre = () => {
 function AddMovieForm() {
     const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
     const { saveMovie, movieError, movieSuccess } = registerMovie();
-    const [allGenre, setGenreList] = useFetchGenre();
+    // const [allGenre, setGenreList] = useFetchGenre();
     // For now, it's just setGenre but I want to addGenre [] -> ['id1'] -> ['id1', 'id2']
     const [genre, setGenre] = useState([]);
 
@@ -145,7 +145,7 @@ function AddMovieForm() {
                 </div>
                 <div className="add-movie-bottom">
                     <span className="add-movie-text"> Genres :</span>
-                    <select
+                    {/* <select
                         className="add-movie-genre"
                         onChange={function (event) { setGenre(event.target.value) }}
                     >
@@ -153,7 +153,21 @@ function AddMovieForm() {
                         {allGenre.map(genre =>
                             <option key={genre.id} value={genre.id}>{genre.name}</option>
                         )}
-                    </select>
+                    </select> */}
+                </div>
+                <div className="add-movie-bottom">
+                    <span className="add-movie-text"> Note :</span>
+                    {/* <input
+                            className="add-movie-stars"
+                            type="number"
+                            min="0"
+                            max="10"
+                            placeholder=""
+                            value={formValues.like}
+                            onChange={(event) =>
+                                setFormValues({ ...formValues, runtime: event.target.value })
+                            }
+                        /> */}
                 </div>
                 <button className="add-a-movie-button" type="submit">
                     Add the movie
