@@ -10,13 +10,15 @@ router.get("/", function (req, res) {
     console.log("testing: don't know how to log res...");
 });
 
-router.post('/new', function (req, res) {
+router.post('/new-movie', function (req, res) {
     const movieRepository = appDataSource.getRepository(Movie);
     // Creating a new movie based on the request
     const newMovie = movieRepository.create({
         title: req.body.title,
-        date: req.body.date,
+        release_date: req.body.release_date,
         overview: req.body.overview,
+        runtime: req.body.runtime,
+        limited_age: req.body.limited_age,
     });
     // Inserting this new movie in the BDD
     movieRepository
