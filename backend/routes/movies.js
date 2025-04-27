@@ -10,7 +10,7 @@ router.get("/", function (req, res) {
         .getRepository(Movie)
         .find({})
         .then(function (movies) {
-            res.json({ results : movies })
+            res.json({ results: movies })
         })
         .catch(function (error) {
             console.error(error);
@@ -32,7 +32,7 @@ router.get("/get-a-movie/:movieID", function (req, res) {
         .catch(function (error) {
             console.error(error);
             res.status(500).json({ message: 'Error : no access to the data base' });
-});
+        });
 });
 
 
