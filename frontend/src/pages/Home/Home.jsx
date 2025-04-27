@@ -12,7 +12,8 @@ const useFetchMovies = () => {
 
   useEffect(() => {
     axios
-      .get('https://api.themoviedb.org/3/trending/movie/week?page=1&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb')
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/movies`)
+      // .get('https://api.themoviedb.org/3/trending/movie/week?page=1&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb')
       .then((reponse) => {
         setList(reponse.data.results)
         console.log(reponse)
