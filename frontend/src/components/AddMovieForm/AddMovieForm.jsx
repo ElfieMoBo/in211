@@ -7,11 +7,14 @@ const DEFAULT_FORM_VALUES = {
     title: '',
     release_date: new Date(),
     overview: '',
-    // poster_path: '',
-    // genre_ids: [],
+    poster_path: 'path',
     limited_age: 7,
     runtime: 0,
-    // casting: [],
+    like: 10,
+    genre_id1: 0,
+    genre_id2: 0,
+    genre_id3: 0,
+    genre_id4: 0,
 };
 
 const registerMovie = () => {
@@ -30,6 +33,7 @@ const registerMovie = () => {
 
         setMovieError(null);
         if (formValues.title === '') {
+            setMovieError('Un titre est demandé')
             console.error('Aucun titre renseignée : le champ est obligatoire');
             return;
         }
@@ -234,6 +238,7 @@ function AddMovieForm() {
                     </div>
 
                     <div className="add-movie-container" >
+                        {/* plutôt faire un select entre 3, 7, 12, 16, 18 */}
                         <p className="add-movie-text"> Âge limite : </p>
                         <input
                             className="add-movie-age"
@@ -261,17 +266,28 @@ function AddMovieForm() {
                 </div>
                 <div className="add-movie-bottom">
                     <span className="add-movie-text"> Note :</span>
-                    {/* <input
-                            className="add-movie-stars"
-                            type="number"
-                            min="0"
-                            max="10"
-                            placeholder=""
-                            value={formValues.like}
-                            onChange={(event) =>
-                                setFormValues({ ...formValues, runtime: event.target.value })
-                            }
-                        /> */}
+                    <input
+                        className="add-movie-stars"
+                        type="number"
+                        min="0"
+                        max="10"
+                        placeholder="Like"
+                        value={formValues.like}
+                        onChange={(event) =>
+                            setFormValues({ ...formValues, like: event.target.value })
+                        }
+                    />
+                    <input
+                        className="add-movie-stars"
+                        type="text"
+                        min="0"
+                        max="10"
+                        placeholder="Like"
+                        value={formValues.poster_path}
+                        onChange={(event) =>
+                            setFormValues({ ...formValues, poster_path: event.target.value })
+                        }
+                    />
                 </div>
                 <div className="button-container">
                     <button className="add-a-movie-button" type="submit">
