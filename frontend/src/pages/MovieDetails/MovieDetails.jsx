@@ -11,21 +11,22 @@ const deleteMovieID = (movieID) => {
 
 const useFetchDetails = (movieID) => {
   // Fonction qui permet de récupérer les détails d'un film grâce à son id
-  const [movieDetails, setDetails] = useState([])
+  const [movieDetails, setDetails] = useState([]);
+  const [genres, setGenres] = useState([]);
 
   useEffect(() => {
     axios
       .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/get-a-movie/${movieID}`)
       .then((reponse) => {
         setDetails(reponse.data.results[0])
+        setGenres([reponse.data.results[0].genre_id1, reponse.data.results[0].genre_id2, reponse.data.results[0].genre_id3, reponse.data.results[0].genre_id4])
         console.log(reponse.data.results[0])
       })
       .catch((error) => {
         console.log(error)
       })
   }, []);
-
-  return [movieDetails, setDetails];
+  return [movieDetails, setDetails, genres];
 }
 
 const useGenreName = (genreID1, genreID2, genreID3, genreID4) => {
@@ -54,9 +55,8 @@ const filterNull = (genre) => {
 
 function MovieDetails() {
   const params = useParams()
-  const [movieDetails, setDetails] = useFetchDetails(params.id)
+  const [movieDetails, setDetails, genres] = useFetchDetails(params.id)
   console.log(movieDetails);
-  // const [movieCast, setCast] = useFetchCast(params.id)
   var date = new Date(movieDetails.release_date)
   // En théorie, cela fonctionne MAIS en pratique cela ne fonctionne QUE lorsque les appels se font dans le bon snes (c'est-à-dire une fois sur 10...)
   const [name, setName] = useGenreName(genres[0], genres[1], genres[2], genres[3]);
@@ -74,11 +74,12 @@ function MovieDetails() {
     }
   }
   const addingNote = (movieID) => {
-      <textarea
-        className="movie-detail-comment"
-        placeholder="Commentaire (à voir plus tard)"
-      >
-      </textarea>
+    alert();
+    <textarea
+      className="movie-detail-comment"
+      placeholder="Commentaire (à voir plus tard)"
+    >
+    </textarea>
   }
 
   // Définition de l'affichage de la page MovieDetails
@@ -134,7 +135,7 @@ function MovieDetails() {
               .length != 0
               ? (
                 name
-                .map((genre) => {
+                  .map((genre) => {
                     return <p className="movie-detail-genre">{(genre.name)}</p>
                   })
               ) : console.log("no")
