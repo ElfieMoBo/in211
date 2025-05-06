@@ -16,13 +16,17 @@ const Movie = new typeorm.EntitySchema({
     overview: { type: String },
     runtime: { type: Number },
     limited_age: { type: Number },
-    // poster_path: { type: String },
-    // genre_ids: { type: Array },
+    poster_path: { type: String },
+    like: { type: Number },
+    genre_id1: { type: Number },
+    genre_id2: { type: Number },
+    genre_id3: { type: Number },
+    genre_id4: { type: Number },
   },
 });
 
 /* Be careful when creating/updating a new TABLE:
-      - have to: run npm run migration:generate --name=nameOfTheMigraiton
+      - have to: run npm migration:generate --name=nameOfTheMigraiton
       - have to: run npm migration:run <3 (or else, the table would not be created)
 */
 
