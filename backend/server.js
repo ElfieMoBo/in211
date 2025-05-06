@@ -2,7 +2,8 @@ import express from 'express';
 import logger from 'morgan';
 import cors from 'cors';
 import usersRouter from './routes/users.js';
-import moviesRouter from './routes/movies.js'
+import moviesRouter from './routes/movies.js';
+import genresRouter from './routes/genres.js';
 import { routeNotFoundJsonHandler } from './services/routeNotFoundJsonHandler.js';
 import { jsonErrorHandler } from './services/jsonErrorHandler.js';
 import { appDataSource } from './datasource.js';
@@ -26,6 +27,7 @@ appDataSource
     });
     apiRouter.use('/users', usersRouter);
     apiRouter.use('/movies', moviesRouter);
+    apiRouter.use('/genres', genresRouter)
 
     // Register API router
     app.use('/api', apiRouter);
