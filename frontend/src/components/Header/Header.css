@@ -15,8 +15,29 @@
   flex-direction: row;
 }
 
+.middle {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 700;
+  color: rgb(200, 210, 180);
+  padding-top: 5px;
+  padding-left: 10px;
+}
+
+.name-color {
+  color: rgb(210, 180, 204);
+}
+
 .Header-container> :not(:last-child) {
   margin-right: 10px;
+}
+
+.header-profil {
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  color: rgb(200, 210, 180);
+  font-size: 30px;
+  border-radius: 50%;
+  background-color: beige;
+  color:black;
 }
 
 .header-icon {
@@ -32,10 +53,4 @@
   color: rgb(200, 210, 180);
   padding-top: 5px;
   padding-left: 10px;
-  <<<<<<< HEAD
 }
-
-=======
-}
-
->>>>>>>40d490b80664bf454d4830fe9d8372027079fafb

@@ -15,17 +15,20 @@ const Header = () => {
           </img>
         </Link>
       </div>
+      <div className="middle">
+        <span className="name">É</span>
+        <span className="name-color">CLIP</span>
+        <span className="name">SE</span>
+      </div>
       <div className="right">
-        <Link className="Link" to="/connection">
-          Connexion
-        </Link>
         <Link className="Link" to="/profil">
-          <img
-            className="header-icon"
+          <button
+            className="header-profil"
             height="30px"
             width="30px"
-            src="https://getdrawings.com/vectors/vector-circle-png-30.png">
-          </img>
+          >
+            M
+          </button>
         </Link>
       </div>
     </div >
