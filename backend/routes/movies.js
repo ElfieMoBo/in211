@@ -45,6 +45,12 @@ router.post('/new-movie', function (req, res) {
         overview: req.body.overview,
         runtime: req.body.runtime,
         limited_age: req.body.limited_age,
+        like: req.body.like,
+        poster_path: req.body.poster_path,
+        genre_id1: req.body.genre_id1,
+        genre_id2: req.body.genre_id2,
+        genre_id3: req.body.genre_id3,
+        genre_id4: req.body.genre_id4,
     });
     // Inserting this new movie in the BDD
     movieRepository
