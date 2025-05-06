@@ -28,7 +28,29 @@ const useFetchDetails = (movieID) => {
   return [movieDetails, setDetails];
 }
 
+const useGenreName = (genreID1, genreID2, genreID3, genreID4) => {
+  const [name, setName] = useState([])
+  console.log(typeof genreID1)
+  useEffect(() => {
+    axios
+      .get(`${import.meta.env.VITE_BACKDEND_URL}/genres/get-genres/${genreID1}/${genreID2}/${genreID3}/${genreID4}`)
+      .then((reponse) => {
+        setName(reponse.data.results)
+        console.log("reponse")
+        console.log(reponse.data.results)
+      })
+      .catch((error) => {
+        console.log("erreur")
+        console.log(error)
+      })
+  }, []);
+  return [name, setName];
+}
 
+const filterNull = (genre) => {
+  // Fonction de filtrage suivant le titre du film
+  return genre != 0
+}
 
 function MovieDetails() {
   const params = useParams()
@@ -36,6 +58,13 @@ function MovieDetails() {
   console.log(movieDetails);
   // const [movieCast, setCast] = useFetchCast(params.id)
   var date = new Date(movieDetails.release_date)
+  // En théorie, cela fonctionne MAIS en pratique cela ne fonctionne QUE lorsque les appels se font dans le bon snes (c'est-à-dire une fois sur 10...)
+  const [name, setName] = useGenreName(genres[0], genres[1], genres[2], genres[3]);
+  console.log("genres ?")
+  console.log(genres);
+  console.log(name);
+  var note = movieDetails.like / 2;
+
   const navigate = useNavigate()
 
   const confirmDelete = (movieID) => {
@@ -71,14 +100,15 @@ function MovieDetails() {
               {Math.floor(movieDetails.runtime / 60) != "0" ?
                 (Math.floor(movieDetails.runtime / 60) + "h" + movieDetails.runtime % 60 + "min") : movieDetails.runtime % 60 + "min"}
             </p>
-            {/* <hr></hr> */}
-            {/* {movieDetails.genres ? (
-              movieDetails
-                .genres
+            {name
+              .length != 0
+              ? (
+                name
                 .map((genre) => {
-                  return <p className="movie-detail-genre">{genre.name}</p>
-                })) : ''
-            } */}
+                    return <p className="movie-detail-genre">{(genre.name)}</p>
+                  })
+              ) : console.log("no")
+            }
             <p className="movie-detail-age"> {movieDetails.limited_age}+ </p>
           </div>
           <div className="movie-detail-overview">
