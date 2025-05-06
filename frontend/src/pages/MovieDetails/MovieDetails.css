@@ -194,3 +194,19 @@
     width: 45%;
     padding-left: 10px;
 }
+
+.movie-detail-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.movie-details-no-star {
+    font-size: 35px;
+}
+
+.movie-details-star {
+    font-size: 35px;
+    color: rgb(189, 63, 168);
+}
