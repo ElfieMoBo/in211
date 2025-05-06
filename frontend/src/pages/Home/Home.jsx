@@ -1,4 +1,5 @@
 import './Home.css';
+import logo from './logo.png'
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
@@ -7,7 +8,7 @@ import Movie from '../../components/Movie/Movie';
 
 
 const useFetchMovies = () => {
-  // Fonction qui permet de récupérer une liste de 20 films
+  // Fonction qui permet de récupérer la liste des films dans la base de données
   const [moviesList, setList] = useState([])
 
   useEffect(() => {
@@ -131,6 +132,15 @@ function Home() {
   // Définition de l'affichage de la page
   return (
     <div className="container">
+      <div className="home-banner">
+        <img
+          className="site-logo"
+          src={logo}
+          width="180px"
+        >
+        </img>
+        <span className="movie-annonce">Liste des films</span>
+      </div>
       <div className="search-container">
         {/* Création d'une boîte de texte avec le texte qui se rajoute en dessous */}
         <input
@@ -175,9 +185,7 @@ function Home() {
 
       <div className="search-results-container">
         {/* Affichage des films possibles sous forme de grille */}
-        <p className="movie-annonce">
-          Films et séries
-        </p>
+        <p></p>
         {/* Trie des films selon plusieurs critères (titre, genre)
             .filter(fonction) -> renvoie un sous-tableau avec les éléments qui sont assigné à true par la fonction 
             .map(fonction) -> applique la fonction à chaque élément du tableau */}

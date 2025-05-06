@@ -7,11 +7,26 @@
   margin-top: 10px
 }
 
+.home-banner {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  width: 95%;
+  padding: 10px;
+}
+
+.site-logo {
+  font-size: 60px;
+  border-radius: 50%;
+}
+
 .search-container {
   display: flex;
   flex-direction: column;
   width: 50%;
 }
+
 .text-input {
   font-size: 20px;
   padding: 4px;
@@ -26,6 +41,7 @@
   justify-content: space-between;
   width: 50%;
 }
+
 .sort-input {
   font-size: 15px;
   padding: 4px;
@@ -34,6 +50,7 @@
   margin-right: 1%;
   width: 40%;
 }
+
 .genre-input {
   font-size: 15px;
   padding: 4px;
@@ -42,6 +59,7 @@
   margin-left: 1%;
   width: 40%;
 }
+
 .add-movie-button {
   background-color: rgba(190, 255, 175, 0.5);
   font-weight: bolder;
@@ -60,11 +78,13 @@
 }
 
 .movie-annonce {
+  padding-left: 50px;
   text-align: justify;
   font-weight: bold;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 25px;
+  font-size: 35px;
 }
+
 .movies-list {
   display: flex;
   flex-direction: row;
@@ -76,6 +96,7 @@
   column-gap: 20px;
   height: 350px;
 }
+
 .no-movie {
   text-align: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
