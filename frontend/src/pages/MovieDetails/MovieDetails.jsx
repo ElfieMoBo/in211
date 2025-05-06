@@ -86,12 +86,42 @@ function MovieDetails() {
     <div className="container">
       {/* Création du visuel : affiche, titre, genre, date, résumé */}
       <div className="movie-visual-container">
-        <img
-          src="/../Home/film.png"
-          className="movie-detail-poster" alt="logo"
-          width="300"
-          height="400"
-        />
+        <div className="movie-detail-left">
+          <img
+            className="movie-poster"
+            src={"https://image.tmdb.org/t/p/w300" + movieDetails.poster_path}
+          />
+
+          {note <= 1
+            ? (
+              <div>
+                <span className='movie-details-star'>★</span>
+                <span className='movie-details-no-star'>★★★★</span>
+              </div>
+            ) : note <= 2
+              ? (
+                <div>
+                  <span className='movie-details-star'>★★</span>
+                  <span className='movie-details-no-star'>★★★</span>
+                </div>
+              ) : note <= 3
+                ? (
+                  <div>
+                    <span className='movie-details-star'>★★★</span>
+                    <span className='movie-details-no-star'>★★</span>
+                  </div>
+                ) : note <= 4
+                  ? (
+                    <div>
+                      <span className='movie-details-star'>★★★★</span>
+                      <span className='movie-details-no-star'>★</span>
+                    </div>
+                  ) :
+                  <div>
+                    <span className='movie-details-star'>★★★★★</span>
+                  </div>
+          }
+        </div>
         <div className="movie-lexical-container">
           <div className='movie-detail-title'>{movieDetails.title}</div>
           <div className="movies-info-line-container">
