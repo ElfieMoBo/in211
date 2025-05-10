@@ -16,6 +16,6 @@
 
 .form-container-box {
   display: flex;
-  border: thick double rgba(190, 255, 175, 0.5);
+  border: thick double rgba(125, 140, 20);
   width: 95%
 }
