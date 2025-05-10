@@ -59,9 +59,9 @@ const useFetchGenre = () => {
 
     useEffect(() => {
         axios
-            .get('https://api.themoviedb.org/3/genre/movie/list?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb')
+            .get(`${import.meta.env.VITE_BACKDEND_URL}/genres`)
             .then((reponse) => {
-                setGenreList(reponse.data.genres)
+                setGenreList(reponse.data.results)
                 console.log(reponse)
             })
             .catch((error) => {
@@ -76,10 +76,21 @@ function AddMovieForm() {
     const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
     const { saveMovie, movieError, movieSuccess } = registerMovie();
     const randPage = Math.floor(Math.random() * 5) + 1;
-    const { populateDataBase } = populate(randPage);
-    // const [allGenre, setGenreList] = useFetchGenre();
-    // For now, it's just setGenre but I want to addGenre [] -> ['id1'] -> ['id1', 'id2']
-    const [genre, setGenre] = useState([]);
+    const [allGenre, setGenreList] = useFetchGenre();
+    const [movieGenre, setGenre] = useState([]);
+    const getGenreID = (genreName) => {
+        useEffect(() => {
+            axios
+                .get(`${import.meta.env.VITE_BACKDEND_URL}/genres/get-genre-id/${genreName}`)
+                .then((reponse) => {
+                    console.log(reponse.data.results.id)
+                    return reponse.data.results.id
+                })
+                .catch((error) => {
+                    console.log(error)
+                })
+        }, []);
+    }
 
     return (
         <div className="container">
