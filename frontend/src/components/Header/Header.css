@@ -1,8 +1,8 @@
 .Header-container {
   display: flex;
   flex-direction: row;
-  background-color: rgb(45, 70, 20);
-  color: rgb(200, 210, 180);
+  background-color: rgb(125, 140, 20);
+  color: rgb(255, 255, 240);
   justify-content: space-between;
   font-size: calc(10px + 2vmin);
   padding: 5px;
@@ -12,19 +12,22 @@
 
 .right {
   display: flex;
+  align-items: center;
+  padding-right: 10px;
   flex-direction: row;
 }
 
 .middle {
+  display: flex;
+  align-items: center;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 700;
-  color: rgb(200, 210, 180);
-  padding-top: 5px;
+  color: rgb(200, 215, 80);
   padding-left: 10px;
 }
 
 .name-color {
-  color: rgb(210, 180, 204);
+  color: rgb(200, 100, 160);
 }
 
 .Header-container> :not(:last-child) {
@@ -33,16 +36,14 @@
 
 .header-profil {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: rgb(200, 210, 180);
   font-size: 30px;
   border-radius: 50%;
-  background-color: beige;
+  background-color: rgb(255, 255, 240);
   color:black;
 }
 
 .header-icon {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
-  color: rgb(200, 210, 180);
   padding-top: 5px;
   padding-left: 10px;
 }
@@ -50,7 +51,5 @@
 .Link {
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-weight: 700;
-  color: rgb(200, 210, 180);
-  padding-top: 5px;
   padding-left: 10px;
 }

@@ -1,27 +1,32 @@
 import { Link } from 'react-router-dom';
 import './Header.css';
+import home from './home.png'
+import logo from './logo.png'
 
 const Header = () => {
   return (
     <div className="Header-container">
       <div className="left">
         <Link className="Link" to="/">
-          {/* I put some random image from internet but I will have to change it in order to have user rights good */}
           <img
             className="header-icon"
-            height="30px"
-            width="30px"
-            src="https://openclipart.org/image/2400px/svg_to_png/217511/142Accueil9747035.png">
+            height="40px"
+            src={home}>
           </img>
         </Link>
       </div>
       <div className="middle">
+        <img
+          className="logo-icon"
+          height="50px"
+          src={logo}>
+        </img>
         <span className="name">É</span>
-        <span className="name-color">CLIP</span>
+        <span className="name name-color">CLIP</span>
         <span className="name">SE</span>
       </div>
       <div className="right">
-        <Link className="Link" to="/profil">
+        <Link className="Link" to="/profils">
           <button
             className="header-profil"
             height="30px"
