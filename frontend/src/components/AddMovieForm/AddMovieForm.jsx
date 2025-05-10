@@ -53,98 +53,6 @@ const registerMovie = () => {
     return { saveMovie, movieError, movieSuccess };
 };
 
-const useFetchMovies = (page) => {
-    const [moviesList, setList] = useState([])
-
-    useEffect(() => {
-        axios
-            .get('https://api.themoviedb.org/3/movie/popular?page=' + page + '&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb')
-            .then((reponse) => {
-                setList(reponse.data.results)
-            })
-            .catch((error) => {
-                console.log(error)
-            })
-    }, []);
-
-    return [moviesList, setList];
-}
-
-const populate = (page) => {
-    var MOVIE_VALUES = {
-        title: '',
-        release_date: new Date(),
-        overview: '',
-        poster_path: 'path',
-        limited_age: 7,
-        runtime: 0,
-        like: 10,
-        genre_id1: 0,
-        genre_id2: 0,
-        genre_id3: 0,
-        genre_id4: 0,
-    };
-    const [formValues, setFormValues] = useState(MOVIE_VALUES);
-    const { saveMovie, movieError, movieSuccess } = registerMovie();
-    const [moviesList, setMoviesList] = useFetchMovies(page)
-
-    const populateDataBase = (event) => {
-        event.preventDefault();
-        alert("Not effective")
-        var age = 18;
-        // for (let i = 1; i < 5; i++) {
-        // Can only be at top of the function ?
-        for (let j = 0; j < 20; j++) {
-            MOVIE_VALUES.title = moviesList[j].title
-            MOVIE_VALUES.release_date = new Date(moviesList[j].release_date)
-            MOVIE_VALUES.overview = moviesList[j].overview
-            MOVIE_VALUES.poster_path = "https://image.tmdb.org/t/p/w300" + moviesList[j].poster_path
-            moviesList[j]
-                .adult ? (age = 18)
-                : age = 7
-            MOVIE_VALUES.limited_age = age
-            MOVIE_VALUES.runtime = moviesList[j].runtime
-            MOVIE_VALUES.like = Math.floor(moviesList[j].vote_average)
-            moviesList[j].genre_ids
-                .length > 1 ?
-                (
-                    MOVIE_VALUES.genre_id1 = moviesList[j].genre_ids[0]
-                ) : MOVIE_VALUES.genre_id1 = 0
-            moviesList[j].genre_ids
-                .length > 2 ?
-                (
-                    MOVIE_VALUES.genre_id2 = moviesList[j].genre_ids[1]
-                ) : MOVIE_VALUES.genre_id2 = 0
-            moviesList[j].genre_ids
-                .length > 3 ?
-                (
-                    MOVIE_VALUES.genre_id3 = moviesList[j].genre_ids[2]
-                ) : MOVIE_VALUES.genre_id3 = 0
-            moviesList[j].genre_ids
-                .length > 4 ?
-                (
-                    MOVIE_VALUES.genre_id4 = moviesList[j].genre_ids[3]
-                ) : MOVIE_VALUES.genre_id4 = 0
-            console.log(MOVIE_VALUES)
-            // axios
-            //     .get('https://api.themoviedb.org/3/movie/' + reponse.data.results[j].id + '?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb')
-            //     .then((reponse) => {
-            //         console.log("passage")
-            //         console.log(j)
-            //         MOVIE_VALUES.runtime = reponse.data.runtime
-            setFormValues(MOVIE_VALUES)
-            console.log(formValues)
-            saveMovie(event, formValues, setFormValues)
-            //     })
-            //     .catch((error) => {
-            //         console.log(error)
-            //     })
-            // }
-        }
-    }
-    return { populateDataBase }
-}
-
 const useFetchGenre = () => {
     // Fonction qui permet de récupérer une liste des genres des films possibles
     const [moviesGenre, setGenreList] = useState([])
@@ -175,16 +83,6 @@ function AddMovieForm() {
 
     return (
         <div className="container">
-            <form
-                className="populate-movie"
-                onSubmit={(event) => populateDataBase(event)}
-            >
-                <div className="button-container">
-                    <button className="add-a-movie-button" type="submit">
-                        Populate
-                    </button>
-                </div>
-            </form>
             <form
                 className="add-movie-form"
                 onSubmit={(event) => saveMovie(event, formValues, setFormValues)}
