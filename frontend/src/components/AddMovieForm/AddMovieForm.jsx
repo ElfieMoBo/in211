@@ -33,7 +33,7 @@ const registerMovie = () => {
 
         setMovieError(null);
         if (formValues.title === '') {
-            setMovieError('Un titre est demandé')
+            setMovieError('Le titre du film est obligatoire')
             console.error('Aucun titre renseignée : le champ est obligatoire');
             return;
         }
@@ -42,6 +42,7 @@ const registerMovie = () => {
             .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/new-movie`, formValues)
             .then(() => {
                 displaySuccessMessage();
+                console.log(formValues);
                 setFormValues(DEFAULT_FORM_VALUES);
             })
             .catch((error) => {
@@ -100,16 +101,16 @@ function AddMovieForm() {
             >
                 <div className="add-movie-top">
                     <input
-                        className="add-movie-title"
+                        className="add-movie-title input-style"
                         type="text"
-                        placeholder="Titre"
+                        placeholder="Titre *"
                         value={formValues.title}
                         onChange={(event) =>
                             setFormValues({ ...formValues, title: event.target.value })
                         }
                     />
                     <textarea
-                        className="add-movie-overview"
+                        className="add-movie-overview input-style"
                         placeholder="Synopsis"
                         value={formValues.overview}
                         onChange={(event) =>
@@ -121,7 +122,7 @@ function AddMovieForm() {
                     <div className="add-movie-container" >
                         <p className="add-movie-text"> Date de sortie : </p>
                         <input
-                            className="add-movie-date"
+                            className="add-movie-date input-style"
                             type="date"
                             placeholder="Release date"
                             value={formValues.release_date}
@@ -134,7 +135,7 @@ function AddMovieForm() {
                     <div className="add-movie-container" >
                         <p className="add-movie-text"> Durée : </p>
                         <input
-                            className="add-movie-runtime"
+                            className="add-movie-runtime input-style"
                             type="number"
                             min="0"
                             max="240"
@@ -150,7 +151,7 @@ function AddMovieForm() {
                         {/* plutôt faire un select entre 3, 7, 12, 16, 18 */}
                         <p className="add-movie-text"> Âge limite : </p>
                         <input
-                            className="add-movie-age"
+                            className="add-movie-age input-style"
                             type="number"
                             min="7"
                             max="18"
@@ -162,21 +163,27 @@ function AddMovieForm() {
                     </div>
                 </div>
                 <div className="add-movie-bottom">
-                    <span className="add-movie-text"> Genres :</span>
-                    {/* <select
-                        className="add-movie-genre"
-                        onChange={function (event) { setGenre(event.target.value) }}
+                    <span className="add-movie-text"> Genre :</span>
+                    <select
+                        className="add-movie-genre input-style"
+                        // value={formValues.genre_id1}
+                        onChange={(event) => setFormValues({ ...formValues, genre_id1: event.target.value })}
                     >
-                        <option value="">Filtrer par genre</option>
+                        <option value="">Choisir un genre</option>
                         {allGenre.map(genre =>
-                            <option key={genre.id} value={genre.id}>{genre.name}</option>
+                            <option 
+                            key={genre.id} 
+                            value={genre.id}
+                            onClick={(event) => setFormValues({ ...formValues,genre_id1: event.target.value })}
+                            >{genre.name}
+                            </option>
                         )}
-                    </select> */}
+                    </select>
                 </div>
                 <div className="add-movie-bottom">
                     <span className="add-movie-text"> Note :</span>
                     <input
-                        className="add-movie-stars"
+                        className="add-movie-stars input-style"
                         type="number"
                         min="0"
                         max="10"
@@ -186,8 +193,9 @@ function AddMovieForm() {
                             setFormValues({ ...formValues, like: event.target.value })
                         }
                     />
+                    <span className="add-movie-text"> Affiche : </span>
                     <input
-                        className="add-movie-stars"
+                        className="add-movie-stars input-style"
                         type="text"
                         min="0"
                         max="10"

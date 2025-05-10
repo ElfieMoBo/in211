@@ -14,6 +14,7 @@ const filterNull = (genre) => {
 }
 
 function MovieDetails() {
+
   const params = useParams()
   const [movieDetails, setMovieDetails] = useState([]);
   const [genreNames, setGenreNames] = useState([]);
@@ -98,10 +99,10 @@ function MovieDetails() {
               {Math.floor(movieDetails.runtime / 60) != "0" ?
                 (Math.floor(movieDetails.runtime / 60) + "h" + movieDetails.runtime % 60 + "min") : movieDetails.runtime % 60 + "min"}
             </p>
-            {name
+            {genreNames
               .length != 0
               ? (
-                name
+                genreNames
                   .map((genre) => {
                     return <p className="movie-detail-genre">{(genre.name)}</p>
                   })
