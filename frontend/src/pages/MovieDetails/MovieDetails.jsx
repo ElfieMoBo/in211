@@ -8,46 +8,6 @@ const deleteMovieID = (movieID) => {
   axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/movies/delete-a-movie/${movieID}`);
 };
 
-
-const useFetchDetails = (movieID) => {
-  // Fonction qui permet de récupérer les détails d'un film grâce à son id
-  const [movieDetails, setDetails] = useState([]);
-  const [genres, setGenres] = useState([]);
-
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKDEND_URL}/movies/get-a-movie/${movieID}`)
-      .then((reponse) => {
-        setDetails(reponse.data.results[0])
-        setGenres([reponse.data.results[0].genre_id1, reponse.data.results[0].genre_id2, reponse.data.results[0].genre_id3, reponse.data.results[0].genre_id4])
-        console.log(reponse.data.results[0])
-      })
-      .catch((error) => {
-        console.log(error)
-      })
-  }, []);
-  return [movieDetails, setDetails, genres];
-}
-
-const useGenreName = (genreID1, genreID2, genreID3, genreID4) => {
-  const [name, setName] = useState([])
-  console.log(typeof genreID1)
-  useEffect(() => {
-    axios
-      .get(`${import.meta.env.VITE_BACKDEND_URL}/genres/get-genres/${genreID1}/${genreID2}/${genreID3}/${genreID4}`)
-      .then((reponse) => {
-        setName(reponse.data.results)
-        console.log("reponse")
-        console.log(reponse.data.results)
-      })
-      .catch((error) => {
-        console.log("erreur")
-        console.log(error)
-      })
-  }, []);
-  return [name, setName];
-}
-
 const filterNull = (genre) => {
   // Fonction de filtrage suivant le titre du film
   return genre != 0
@@ -55,14 +15,21 @@ const filterNull = (genre) => {
 
 function MovieDetails() {
   const params = useParams()
-  const [movieDetails, setDetails, genres] = useFetchDetails(params.id)
-  console.log(movieDetails);
+  const [movieDetails, setMovieDetails] = useState([]);
+  const [genreNames, setGenreNames] = useState([]);
+
+  useEffect(() => {
+    (async () => {
+      const movies = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/movies/get-a-movie/${params.id}`);
+      setMovieDetails(movies.data.results[0])
+      console.log(movies.data.results[0])
+      const genres = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/genres/get-genres/${movies.data.results[0].genre_id1}/${movies.data.results[0].genre_id2}/${movies.data.results[0].genre_id3}/${movies.data.results[0].genre_id4}`)
+      setGenreNames(genres.data.results)
+      console.log(genres.data.results)
+    })()
+  }, [])
+
   var date = new Date(movieDetails.release_date)
-  // En théorie, cela fonctionne MAIS en pratique cela ne fonctionne QUE lorsque les appels se font dans le bon snes (c'est-à-dire une fois sur 10...)
-  const [name, setName] = useGenreName(genres[0], genres[1], genres[2], genres[3]);
-  console.log("genres ?")
-  console.log(genres);
-  console.log(name);
   var note = movieDetails.like / 2;
 
   const navigate = useNavigate()

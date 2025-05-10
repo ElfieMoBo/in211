@@ -191,14 +191,14 @@ function Home() {
             .map(fonction) -> applique la fonction à chaque élément du tableau */}
         {moviesList
           .filter(filterTitle)
-          // .filter(filterGenre)
+          .filter(filterGenre)
           .length != 0
           ? (
             <div className="movies-list">
               {moviesList
                 .filter(filterTitle)
-                // .filter(filterGenre)
-                // .sort(sortByItem(sortChosen))
+                .filter(filterGenre)
+                .sort(sortByItem(sortChosen))
                 .map((movie) => {
                   return <Movie
                     key={movie.id}
