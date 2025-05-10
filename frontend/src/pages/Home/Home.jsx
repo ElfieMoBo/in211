@@ -154,7 +154,7 @@ function Home() {
       <div className="sort-filter-container">
         {/* Création d'un menu déroulant pour choisir le genre */}
         <select
-          className="sort-input"
+          className="sort-input input"
           onChange={function (event) { setSort(event.target.value) }}
         >
           <option value="0">Trier suivant</option>
@@ -165,7 +165,7 @@ function Home() {
 
         {/* Création d'un menu déroulant pour choisir le critère de trie */}
         <select
-          className="genre-input"
+          className="genre-input input"
           onChange={function (event) { setGenre(event.target.value) }}
         >
           <option value="">Filtrer par genre</option>
