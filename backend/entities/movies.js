@@ -1,4 +1,4 @@
-import typeorm from 'typeorm';
+import typeorm, { Double } from 'typeorm';
 
 const Movie = new typeorm.EntitySchema({
   name: 'Movie',
@@ -17,7 +17,7 @@ const Movie = new typeorm.EntitySchema({
     runtime: { type: Number },
     limited_age: { type: Number },
     poster_path: { type: String },
-    like: { type: Number },
+    like: { type: 'float'},
     genre_id1: { type: Number },
     genre_id2: { type: Number },
     genre_id3: { type: Number },
