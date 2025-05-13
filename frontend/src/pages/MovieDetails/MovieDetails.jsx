@@ -38,9 +38,10 @@ function MovieDetails() {
   }
 
   const addingNote = (movieID) => {
+    var user = prompt("Ajouter un nom d'utilisateur", "Nom d'utilisateur");
     var comment = prompt("Ajouter un commentaire ce film", "Commentaire");
     axios
-      .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/add-a-comment`, { comment: `${comment}`, id: `${movieID}` })
+      .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/add-a-comment`, { comment: `${comment}`, user_comment: `${user}`, id: `${movieID}` })
       .then(() => {
         console.log("success");
       })
@@ -51,18 +52,19 @@ function MovieDetails() {
     location.reload();
   }
 
-  const deletingNote = (movieID) => {
-    alert();
-    axios
-      .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/add-a-comment`, { comment: "", id: `${movieID}` })
-      .then(() => {
-        console.log("success");
-      })
-      .catch((error) => {
-        setMovieError("Une erreur est survenue lors de l'enregistrement du commentaire.");
-        console.error(error);
-      });
-    location.reload();
+  const deletingNote = (movieID, username) => {
+    if (confirm(`La suppression est définitive, êtes-vous sûre de vouloir supprimer le commentaire de ${username} ?`)) {
+      axios
+        .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/add-a-comment`, { comment: "", user_comment: "", id: `${movieID}` })
+        .then(() => {
+          console.log("success");
+        })
+        .catch((error) => {
+          setMovieError("Une erreur est survenue lors de l'enregistrement du commentaire.");
+          console.error(error);
+        });
+      location.reload();
+    }
   }
 
   // Définition de l'affichage de la page MovieDetails
@@ -134,24 +136,23 @@ function MovieDetails() {
             .comment
             ? (
               <div className="movie-detail-comment-container">
-                <span className='movie-detail-comment'>
-                  Note
-
+                <span className='movie-detail-comment movie-detail-user'>
+                  {movieDetails.user_comment}
                 </span>
                 <span className="movie-detail-comment">
                   {movieDetails.comment}
                 </span>
 
                 <input
-                  className="movie-detail-delete-note-button"
-                  onClick={() => deletingNote(movieDetails.id)}
+                  className="movie-detail-note-button delete-note"
+                  onClick={() => deletingNote(movieDetails.id, movieDetails.user_comment)}
                   type="button"
                   value="- Note"
                   title="Supprimer le commentaire sur le film"
                 />
               </div>
             ) : <input
-              className="movie-detail-add-note-button"
+              className="movie-detail-note-button add-note"
               onClick={() => addingNote(movieDetails.id)}
               type="button"
               value="+ Note"
