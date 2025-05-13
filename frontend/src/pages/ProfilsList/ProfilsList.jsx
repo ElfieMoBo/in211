@@ -18,6 +18,7 @@ function displayProfils() {
 
     return (
         <div className="user-container">
+            {document.cookie}
             <p className="user-text">
                 Liste des utilisateurs
             </p>
@@ -45,6 +46,12 @@ function displayProfils() {
                     </div>
 
                 </div>
+                <input
+                    className="log-sign-button"
+                    onClick={() => document.cookie = `pseudo=; SameSite=None; Secure`}
+                type="button"
+                value="Se déconnecter"
+                />
             </div>
         </div>
     );
