@@ -145,7 +145,7 @@ function MovieDetails() {
                   {movieDetails.comment}
                 </span>
         
-          <input
+                <input
                   className="movie-detail-delete-note-button"
                   onClick={() => deletingNote(movieDetails.id)}
                   type="button"
@@ -155,11 +155,11 @@ function MovieDetails() {
               </div>
             ) : <input
               className="movie-detail-add-note-button"
-            onClick={() => addingNote(movieDetails.id)}
-            type="button"
-            value="+ Note"
-            title="Ajouter un commentaire sur le film"
-          />
+              onClick={() => addingNote(movieDetails.id)}
+              type="button"
+              value="+ Note"
+              title="Ajouter un commentaire sur le film"
+            />
           }
         </div>
       </div>
