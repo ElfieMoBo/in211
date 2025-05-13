@@ -91,14 +91,36 @@
     font-size: 20px;
 }
 
-.movie-detail-cast-distribution {
-    padding-left: 10px;
-    margin: 5px;
-    font-size: 15px;
+.movie-detail-comment-container {
+    display: flex;
+    flex-direction: column;
+    border: thick double rgba(125, 140, 20);
+    background-color: rgba(186, 186, 186, 0.2);
+    width: 95%;
+    margin-left: 10px;
+    font-size: 100px;
 }
 
-.add-note-movie-button {
+.movie-detail-comment {
+    padding: 01px;
+    margin: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+.movie-detail-add-note-button {
     background-color: rgba(200, 215, 80);
+    font-weight: bolder;
+    font-size: 20px;
+    border-radius: 15px;
+    margin: 5px;
+    margin-top: 10px;
+    width: 100px;
+    height: 30px;
+}
+
+.movie-detail-delete-note-button {
+    background-color: rgba(200, 100, 160);
     font-weight: bolder;
     font-size: 20px;
     border-radius: 15px;
@@ -131,64 +153,6 @@
     padding: 1%;
     margin: 1%;
     font-size: 120%;
-}
-
-.movie-detail-espace-commentaire {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    padding: 20px;
-    width: 100%;
-    margin: 1em auto;
-}
-
-.movie-detail-bandeau {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    width: 100%;
-}
-
-.movie-detail-commentaire {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: row;
-    justify-content: flex-start;
-    align-items: flex-start;
-    width: 100%;
-}
-
-.movide-detail-nouveau-commentaire {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    width: 45%;
-    padding-right: 10px;
-}
-
-.movie-detail-user {
-    font-size: 15px;
-    padding: 4px;
-    border-radius: 5px;
-    margin-bottom: 10px;
-}
-
-.movie-detail-comment {
-    font-size: 15px;
-    text-align: justify;
-    text-justify: inter-word;
-    overflow-wrap: break-word;
-    padding: 4px;
-    border-radius: 5px;
-    height: 60px;
-}
-
-.movide-detail-ancien-commentaire {
-    display: flex;
-    flex-wrap: wrap;
-    flex-direction: column;
-    width: 45%;
-    padding-left: 10px;
 }
 
 .movie-detail-left {

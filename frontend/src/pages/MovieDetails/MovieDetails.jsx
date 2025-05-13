@@ -41,13 +41,33 @@ function MovieDetails() {
       navigate('/');
     }
   }
+
   const addingNote = (movieID) => {
+    var comment = prompt("Ajouter un commentaire ce film", "Commentaire");
+    axios
+      .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/add-a-comment`, { comment: `${comment}`, id: `${movieID}` })
+      .then(() => {
+        console.log("success");
+      })
+      .catch((error) => {
+        setMovieError("Une erreur est survenue lors de l'enregistrement du commentaire.");
+        console.error(error);
+      })
+      location.reload();
+  }
+
+  const deletingNote = (movieID) => {
     alert();
-    <textarea
-      className="movie-detail-comment"
-      placeholder="Commentaire (à voir plus tard)"
-    >
-    </textarea>
+    axios
+      .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/add-a-comment`, { comment: "", id: `${movieID}` })
+      .then(() => {
+        console.log("success");
+      })
+      .catch((error) => {
+        setMovieError("Une erreur est survenue lors de l'enregistrement du commentaire.");
+        console.error(error);
+      });
+      location.reload();
   }
 
   // Définition de l'affichage de la page MovieDetails
@@ -113,13 +133,34 @@ function MovieDetails() {
           <div className="movie-detail-overview">
             {movieDetails.overview}
           </div>
+          {movieDetails
+            .comment
+            ? (
+              <div className="movie-detail-comment-container">
+                <span className='movie-detail-comment'> 
+                  Note
+
+                </span>
+                <span className="movie-detail-comment">
+                  {movieDetails.comment}
+                </span>
+        
           <input
-            className="add-note-movie-button"
+                  className="movie-detail-delete-note-button"
+                  onClick={() => deletingNote(movieDetails.id)}
+                  type="button"
+                  value="- Note"
+                  title="Supprimer le commentaire sur le film"
+                />
+              </div>
+            ) : <input
+              className="movie-detail-add-note-button"
             onClick={() => addingNote(movieDetails.id)}
             type="button"
             value="+ Note"
             title="Ajouter un commentaire sur le film"
           />
+          }
         </div>
       </div>
       <div className="movie-sup-container">
@@ -131,33 +172,6 @@ function MovieDetails() {
           title="Supprimer ce film de la base de données"
         />
       </div>
-
-      {/* Création d'une section commentaires */}
-      {/* <div className="movie-detail-espace-commentaire">
-        <div className="movie-detail-bandeau">
-          <p className="movie-detail-"> Laisser un commentaire : </p>
-          <p className="movie-detail-star">{movieDetails.vote_average}</p> 
-        </div>
-
-        <div className="movie-detail-commentaire">
-          <div className="movide-detail-nouveau-commentaire">
-            <input
-              type="text"
-              className="movie-detail-user"
-              placeholder="Nom d'utilisateur"
-            >
-            </input>
-            <textarea
-              className="movie-detail-comment"
-              placeholder="Commentaire (à voir plus tard)"
-            >
-            </textarea>
-          </div>
-          <div className="movide-detail-ancien-commentaire">
-            <p>Old Comment</p>
-          </div>
-        </div>
-      </div> */}
     </div >
   );
 }
