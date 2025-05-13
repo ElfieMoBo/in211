@@ -227,6 +227,7 @@ function Home() {
         {moviesList
           .filter(filterTitle)
           .filter(filterGenre)
+          .slice(start, start + moviePerPage)
           .length != 0
           ? (
             <div className="movies-list">
@@ -245,8 +246,14 @@ function Home() {
                 })
               }
             </div>
-          )
-          : <div className="no-movie"> Aucun résultat n'a été trouvé </div>}
+          ) : moviesList
+            .filter(filterTitle)
+            .filter(filterGenre)
+            .slice(0, 0 + moviePerPage)
+            .length != 0
+            ? (
+              setStart(0)
+            ) : <div className="no-movie"> Aucun résultat n'a été trouvé </div>}
       </div>
     </div>
   );
