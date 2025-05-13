@@ -1,6 +1,7 @@
 import express from 'express';
 import { appDataSource } from '../datasource.js';
 import Movie from '../entities/movies.js';
+import { DataSource } from 'typeorm';
 
 
 const router = express.Router();
@@ -105,6 +106,20 @@ router.delete('/delete-a-movie/:movieID', function (req, res) {
             res.status(500).json({ message: 'Error while deleting the movie' });
         });
 });
+
+
+router.post('/add-a-comment', function (req, res) {
+    console.log(req.body)
+    appDataSource
+        .createQueryBuilder()
+        .update(Movie)
+        .set({ comment: req.body.comment })
+        .where("id = :id", { id: req.body.id })
+        .execute()
+        .catch((error) =>
+            console.log(error)
+        )
+})
 
 export default router;
 
