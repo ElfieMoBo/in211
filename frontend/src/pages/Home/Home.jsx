@@ -54,7 +54,7 @@ function Home() {
   const [moviesList, setList] = useFetchMovies()
   const [movieGenre, setGenreList] = useFetchGenre()
   const [genreChosen, setGenre] = useState("")
-  const sortItem = [{ id: "1", name: "Popularité" }, { id: "2", name: "Likes" }, { id: "3", name: "Date (récent)" }, { id: "4", name: "Date (ancien)" }]
+  const sortItem = [{ id: "2", name: "Likes" }, { id: "3", name: "Date (récent)" }, { id: "4", name: "Date (ancien)" }]
   const [sortChosen, setSort] = useState("0")
 
   const navigate = useNavigate()
@@ -87,24 +87,13 @@ function Home() {
   }
 
   const sortByItem = (item) => {
-    // Fonction de trie suivant la popularité, le nombre de likes, la date ou l'ordre alphabétique
-    if (item == "1") {
-      // Popularité
+    // Fonction de trie suivant le nombre de likes, la date ou l'ordre alphabétique
+    if (item == "2") {
+      // Like
       return (a, b) => {
-        if (parseInt(a.popularity) < parseInt(b.popularity)) {
+        if (parseInt(a.like) < parseInt(b.like)) {
           return 1;
-        } else if (parseInt(a.popularity) > parseInt(b.popularity)) {
-          return -1;
-        } else {
-          return 0;
-        }
-      }
-    } else if (item == "2") {
-      // Likes
-      return (a, b) => {
-        if (parseInt(a.vote_average) < parseInt(b.vote_average)) {
-          return 1;
-        } else if (parseInt(a.vote_average) > parseInt(b.vote_average)) {
+        } else if (parseInt(a.like) > parseInt(b.like)) {
           return -1;
         } else {
           return 0;
@@ -172,6 +161,7 @@ function Home() {
   // Définition de l'affichage de la page
   return (
     <div className="container">
+      {document.cookie}
       <div className="home-banner">
         <img
           className="site-logo"
@@ -213,6 +203,7 @@ function Home() {
             <option key={genre.id} value={genre.id}>{genre.name}</option>
           )}
         </select>
+        
         {/* Création d'un boutton pour ajouter un film */}
         <input
           className="add-movie-button"

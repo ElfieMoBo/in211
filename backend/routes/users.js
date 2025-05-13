@@ -16,8 +16,11 @@ router.get('/', function (req, res) {
 router.post('/new', function (req, res) {
   const userRepository = appDataSource.getRepository(User);
   const newUser = userRepository.create({
+    email: req.body.email,
+    lastname: req.body.lastname,
+    firstname: req.body.firstname,
     pseudo: req.body.pseudo,
-    shadow: req.body.shadow,
+    shadow: req.body.passwd,
     age: req.body.age,
   });
 
@@ -30,32 +33,34 @@ router.post('/new', function (req, res) {
       console.error(error);
       if (error.code === '23505') {
         res.status(400).json({
-          message: `User with email "${newUser.email}" already exists`,
+          message: `L'adresse mail "${newUser.email}" existe déjà`,
         });
       } else {
-        res.status(500).json({ message: 'Error while creating the user' });
+        res.status(500).json({ message: "Erreur lors de la création de l'utilisateur" });
       }
     });
 });
 
-router.get('/login/:userid/:usershadow', function (req, res) {
+router.post('/login', function (req, res) {
+  console.log(req.body)
   appDataSource
     .getRepository(User)
     .find({
       where: {
-        id: req.params.userid
+        pseudo: req.body.pseudo
       }
     })
     .then(function (user) {
-      user[0].shadow == req.params.usershadow ? (
+      console.log("user", user)
+      user[0].shadow == req.body.passwd ? (
         res.status(201).json(user)
       ) : res.status(400).json({
-        message: `Bad password for ${user[0].pseudo}`,
+        message: `Mot de passe incorrect pour (${user[0].pseudo})`,
       })
     })
     .catch(function (error) {
       console.error(error);
-      res.status(500).json({ message: 'Error while authentification' });
+      res.status(500).json({ message: "Ce nom d'utilisateur est inconnu" });
     });
 })
 

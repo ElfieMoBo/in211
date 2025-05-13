@@ -8,6 +8,12 @@ const User = new typeorm.EntitySchema({
       generated: 'uuid',
       type: String,
     },
+    firstname: {
+      type: String
+    },
+    lastname: {
+      type: String
+    },
     pseudo: {
       type: String,
       unique: true,
