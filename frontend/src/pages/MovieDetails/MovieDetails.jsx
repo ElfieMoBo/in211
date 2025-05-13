@@ -48,7 +48,7 @@ function MovieDetails() {
         setMovieError("Une erreur est survenue lors de l'enregistrement du commentaire.");
         console.error(error);
       })
-      location.reload();
+    location.reload();
   }
 
   const deletingNote = (movieID) => {
@@ -62,7 +62,7 @@ function MovieDetails() {
         setMovieError("Une erreur est survenue lors de l'enregistrement du commentaire.");
         console.error(error);
       });
-      location.reload();
+    location.reload();
   }
 
   // Définition de l'affichage de la page MovieDetails
@@ -71,10 +71,12 @@ function MovieDetails() {
       {/* Création du visuel : affiche, titre, genre, date, résumé */}
       <div className="movie-visual-container">
         <div className="movie-detail-left">
-          <img
-            className="movie-poster"
-            src={"https://image.tmdb.org/t/p/w300" + movieDetails.poster_path}
-          />
+          {movieDetails.poster_path ? (
+            <img src={"https://image.tmdb.org/t/p/w300" + movieDetails.poster_path} className="movie-poster" alt="logo"
+            />
+          ) :
+            <div className="movie-poster no-poster"> Aucune couverture </div>
+          }
 
           {note <= 1
             ? (
@@ -132,14 +134,14 @@ function MovieDetails() {
             .comment
             ? (
               <div className="movie-detail-comment-container">
-                <span className='movie-detail-comment'> 
+                <span className='movie-detail-comment'>
                   Note
 
                 </span>
                 <span className="movie-detail-comment">
                   {movieDetails.comment}
                 </span>
-        
+
                 <input
                   className="movie-detail-delete-note-button"
                   onClick={() => deletingNote(movieDetails.id)}
