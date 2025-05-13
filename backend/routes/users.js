@@ -38,6 +38,27 @@ router.post('/new', function (req, res) {
     });
 });
 
+router.get('/login/:userid/:usershadow', function (req, res) {
+  appDataSource
+    .getRepository(User)
+    .find({
+      where: {
+        id: req.params.userid
+      }
+    })
+    .then(function (user) {
+      user[0].shadow == req.params.usershadow ? (
+        res.status(201).json(user)
+      ) : res.status(400).json({
+        message: `Bad password for ${user[0].pseudo}`,
+      })
+    })
+    .catch(function (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Error while authentification' });
+    });
+})
+
 router.delete('/:userId', function (req, res) {
   appDataSource
     .getRepository(User)
