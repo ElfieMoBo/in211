@@ -8,11 +8,6 @@ const deleteMovieID = (movieID) => {
   axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/movies/delete-a-movie/${movieID}`);
 };
 
-const filterNull = (genre) => {
-  // Fonction de filtrage suivant le titre du film
-  return genre != 0
-}
-
 function MovieDetails() {
 
   const params = useParams()
