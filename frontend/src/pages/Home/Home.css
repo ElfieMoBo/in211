@@ -102,3 +102,23 @@
   justify-content: center;
   align-items: center;
 }
+
+.pagination-button {
+  display: flex;
+  flex-direction: row;
+  background-color: rgba(200, 215, 80);
+  /* font-weight: bolder; */
+  font-size: 20px;
+  border-radius: 5px;
+  margin: 5px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+
+.pagination-button:hover {
+  background-color: rgba(200, 100, 160);
+}
+
+.pagination-button:focus {
+  background-color: rgba(200, 100, 160);
+}
