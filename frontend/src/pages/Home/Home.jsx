@@ -65,8 +65,9 @@ function Home() {
   }
   const filterGenre = (movie) => {
     // Fonciton de filtrage suivant le genre du film
+    const genre_ids = [movie.genre_id1, movie.genre_id2, movie.genre_id3, movie.genre_id4]
     if (genreChosen != "") {
-      return movie.genre_ids.map((genre) => { return genre.toString() }).includes(genreChosen.toString())
+      return genre_ids.map((genre) => { return genre.toString() }).includes(genreChosen.toString())
     } else {
       return true
     }
@@ -143,6 +144,23 @@ function Home() {
     }
   }
 
+  const paginate = (pages) => {
+    return <div className="pagination-container">
+      {
+        pages
+          .filter(filterPage)
+          .map((page) => {
+            return <input
+              className="pagination-button"
+              type="button"
+              value={page + 1}
+              onClick={() => setStart(((page + 1) - 1) * moviePerPage)}
+            />
+          })
+      }
+    </div>
+  }
+
   // Variable to paginate
   const moviePerPage = 10;
   var movieTotal = moviesList.length;
@@ -206,24 +224,14 @@ function Home() {
       </div>
 
       <div className="search-results-container">
-        {/* Affichage des films possibles sous forme de grille */}
+        {/* Affichage des films possibles sous forme de grille et avec une pagination */}
         <div className="pagination-container">
-          {pages
-            .filter(filterPage)
-            .map((page) => {
-              console.log(page);
-              return <input
-                className="pagination-button"
-                type="button"
-                value={page + 1}
-                onClick={() => setStart(((page + 1) - 1) * moviePerPage)}
-              />
-            })}
+          {paginate(pages)}
         </div>
-
         {/* Trie des films selon plusieurs critères (titre, genre)
             .filter(fonction) -> renvoie un sous-tableau avec les éléments qui sont assigné à true par la fonction 
             .map(fonction) -> applique la fonction à chaque élément du tableau */}
+
         {moviesList
           .filter(filterTitle)
           .filter(filterGenre)
