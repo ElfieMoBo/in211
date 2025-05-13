@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 
 import Movie from '../../components/Movie/Movie';
+import MovieDetails from '../MovieDetails/MovieDetails';
 
 
 const useFetchMovies = () => {
@@ -71,6 +72,19 @@ function Home() {
     }
   }
 
+  const filterPage = (page) => {
+    var movieTotal = moviesList
+      .filter(filterTitle)
+      .filter(filterGenre)
+      .length;
+    var pageTotal = Math.ceil(movieTotal / moviePerPage);
+    if (page < pageTotal) {
+      return true
+    } else {
+      return false
+    }
+  }
+
   const sortByItem = (item) => {
     // Fonction de trie suivant la popularité, le nombre de likes, la date ou l'ordre alphabétique
     if (item == "1") {
@@ -129,6 +143,14 @@ function Home() {
     }
   }
 
+  // Variable to paginate
+  const moviePerPage = 10;
+  var movieTotal = moviesList.length;
+  var currentPage = 1;
+  const [start, setStart] = useState((currentPage - 1) * moviePerPage);
+  var end = start + moviePerPage;
+  var pages = [...Array(Math.ceil(movieTotal / moviePerPage)).keys()];
+
   // Définition de l'affichage de la page
   return (
     <div className="container">
@@ -185,7 +207,20 @@ function Home() {
 
       <div className="search-results-container">
         {/* Affichage des films possibles sous forme de grille */}
-        <p></p>
+        <div className="pagination-container">
+          {pages
+            .filter(filterPage)
+            .map((page) => {
+              console.log(page);
+              return <input
+                className="pagination-button"
+                type="button"
+                value={page + 1}
+                onClick={() => setStart(((page + 1) - 1) * moviePerPage)}
+              />
+            })}
+        </div>
+
         {/* Trie des films selon plusieurs critères (titre, genre)
             .filter(fonction) -> renvoie un sous-tableau avec les éléments qui sont assigné à true par la fonction 
             .map(fonction) -> applique la fonction à chaque élément du tableau */}
@@ -199,6 +234,7 @@ function Home() {
                 .filter(filterTitle)
                 .filter(filterGenre)
                 .sort(sortByItem(sortChosen))
+                .slice(start, start + moviePerPage)
                 .map((movie) => {
                   return <Movie
                     key={movie.id}

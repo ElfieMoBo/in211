@@ -95,3 +95,10 @@
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   font-size: 25px;
 }
+
+.pagination-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
