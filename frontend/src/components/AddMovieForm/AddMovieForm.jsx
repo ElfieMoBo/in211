@@ -7,7 +7,7 @@ const DEFAULT_FORM_VALUES = {
     title: '',
     release_date: new Date(),
     overview: '',
-    poster_path: 'path',
+    poster_path: '',
     limited_age: 7,
     runtime: 0,
     like: 10,
