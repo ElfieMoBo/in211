@@ -5,7 +5,7 @@ function Movie({ movie }) {
     const navigate = useNavigate()
 
     return (
-        <div id="movie-affiche"
+        <div className="movie-affiche"
             onClick={() => navigate("/details/" + movie.id)}>
             {movie.poster_path ? (
                 <img src={"https://image.tmdb.org/t/p/w300" + movie.poster_path} className="movie-poster" alt="logo" title={movie.overview}
