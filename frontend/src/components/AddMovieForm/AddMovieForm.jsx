@@ -10,7 +10,7 @@ const DEFAULT_FORM_VALUES = {
     poster_path: '',
     limited_age: 7,
     runtime: 0,
-    like: 10,
+    like: 0,
     genre_id1: 0,
     genre_id2: 0,
     genre_id3: 0,
@@ -92,6 +92,27 @@ function AddMovieForm() {
                 })
         }, []);
     }
+    const stars = [1, 2, 3, 4, 5];
+    const starslist = document.getElementsByClassName("add-movie-star");
+    console.log("starslist = ", starslist)
+
+    const colorStar = (givenLike) => {
+        // Remove style:
+        stars
+            .map((number) => {
+                starslist[number - 1].className = "add-movie-star"
+            })
+
+        // Add style:
+        stars
+            .map((number) => {
+                if (number <= givenLike) {
+                    starslist[number - 1].className = "add-movie-star add-movie-star-selected"
+                }
+            })
+        // Setting note (note are registered between 0 and 10):
+        setFormValues({ ...formValues, like: 2 * givenLike })
+    }
 
     return (
         <div className="container">
@@ -171,10 +192,10 @@ function AddMovieForm() {
                     >
                         <option value="">Choisir un genre</option>
                         {allGenre.map(genre =>
-                            <option 
-                            key={genre.id} 
-                            value={genre.id}
-                            onClick={(event) => setFormValues({ ...formValues,genre_id1: event.target.value })}
+                            <option
+                                key={genre.id}
+                                value={genre.id}
+                                onClick={(event) => setFormValues({ ...formValues, genre_id1: event.target.value })}
                             >{genre.name}
                             </option>
                         )}
@@ -182,18 +203,22 @@ function AddMovieForm() {
                 </div>
                 <div className="add-movie-bottom">
                     <span className="add-movie-text"> Note :</span>
-                    <input
-                        className="add-movie-stars input-style"
-                        type="number"
-                        min="0"
-                        max="10"
-                        placeholder="Like"
-                        value={formValues.like}
-                        onChange={(event) =>
-                            setFormValues({ ...formValues, like: event.target.value })
-                        }
-                    />
-                    <span className="add-movie-text"> Affiche : </span>
+                    {
+                        stars
+                            .map((number) => {
+                                return <input
+                                    className="add-movie-star"
+                                    type="button"
+                                    id={number}
+                                    value="★"
+                                    onClick={() =>
+                                        colorStar(number)
+                                    }
+                                />
+                            })
+                    }
+
+                    {/* <span className="add-movie-text"> Affiche : </span>
                     <input
                         className="add-movie-stars input-style"
                         type="text"
@@ -204,7 +229,7 @@ function AddMovieForm() {
                         onChange={(event) =>
                             setFormValues({ ...formValues, poster_path: event.target.value })
                         }
-                    />
+                    /> */}
                 </div>
                 <div className="button-container">
                     <button className="add-a-movie-button" type="submit">

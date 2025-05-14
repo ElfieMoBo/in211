@@ -27,6 +27,17 @@ function MovieDetails() {
 
   var date = new Date(movieDetails.release_date)
   var note = movieDetails.like / 2;
+  const filterLike = (number) => {
+    if (note > number - 1 && note <= number) {
+      console.log("yep : number", number, "note", note);
+      return true
+    } else {
+      console.log("no : number", number, "note", note);
+      return false
+    }
+  }
+  const stars = [1, 2, 3, 4, 5];
+  const starslist = [["★", "★★★★"], ["★★", "★★★"], ["★★★", "★★"], ["★★★★", "★"], ["★★★★★", ""]];
 
   const navigate = useNavigate()
 
@@ -80,34 +91,15 @@ function MovieDetails() {
             <div className="movie-poster no-poster"> Aucune couverture </div>
           }
 
-          {note <= 1
-            ? (
-              <div>
-                <span className='movie-details-star'>★</span>
-                <span className='movie-details-no-star'>★★★★</span>
-              </div>
-            ) : note <= 2
-              ? (
-                <div>
-                  <span className='movie-details-star'>★★</span>
-                  <span className='movie-details-no-star'>★★★</span>
+          {
+            stars
+              .filter(filterLike)
+              .map((number) => {
+                return <div>
+                  <span className='star movie-details-star'>{starslist[number-1][0]}</span>
+                  <span className='star'>{starslist[number-1][1]}</span>
                 </div>
-              ) : note <= 3
-                ? (
-                  <div>
-                    <span className='movie-details-star'>★★★</span>
-                    <span className='movie-details-no-star'>★★</span>
-                  </div>
-                ) : note <= 4
-                  ? (
-                    <div>
-                      <span className='movie-details-star'>★★★★</span>
-                      <span className='movie-details-no-star'>★</span>
-                    </div>
-                  ) :
-                  <div>
-                    <span className='movie-details-star'>★★★★★</span>
-                  </div>
+              })
           }
         </div>
         <div className="movie-lexical-container">
