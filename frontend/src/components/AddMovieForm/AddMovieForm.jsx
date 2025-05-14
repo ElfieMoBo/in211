@@ -42,7 +42,6 @@ const registerMovie = () => {
             .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/new-movie`, formValues)
             .then(() => {
                 displaySuccessMessage();
-                console.log(formValues);
                 setFormValues(DEFAULT_FORM_VALUES);
             })
             .catch((error) => {
@@ -76,25 +75,10 @@ const useFetchGenre = () => {
 function AddMovieForm() {
     const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
     const { saveMovie, movieError, movieSuccess } = registerMovie();
-    const randPage = Math.floor(Math.random() * 5) + 1;
     const [allGenre, setGenreList] = useFetchGenre();
-    const [movieGenre, setGenre] = useState([]);
-    const getGenreID = (genreName) => {
-        useEffect(() => {
-            axios
-                .get(`${import.meta.env.VITE_BACKDEND_URL}/genres/get-genre-id/${genreName}`)
-                .then((reponse) => {
-                    console.log(reponse.data.results.id)
-                    return reponse.data.results.id
-                })
-                .catch((error) => {
-                    console.log(error)
-                })
-        }, []);
-    }
+
     const stars = [1, 2, 3, 4, 5];
     const starslist = document.getElementsByClassName("add-movie-star");
-    console.log("starslist = ", starslist)
 
     const colorStar = (givenLike) => {
         // Remove style:
@@ -217,19 +201,6 @@ function AddMovieForm() {
                                 />
                             })
                     }
-
-                    {/* <span className="add-movie-text"> Affiche : </span>
-                    <input
-                        className="add-movie-stars input-style"
-                        type="text"
-                        min="0"
-                        max="10"
-                        placeholder="Like"
-                        value={formValues.poster_path}
-                        onChange={(event) =>
-                            setFormValues({ ...formValues, poster_path: event.target.value })
-                        }
-                    /> */}
                 </div>
                 <div className="button-container">
                     <button className="add-a-movie-button" type="submit">
