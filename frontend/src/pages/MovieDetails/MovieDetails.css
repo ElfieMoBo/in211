@@ -164,11 +164,10 @@
     align-items: center;
 }
 
-.movie-details-no-star {
+.star {
     font-size: 35px;
 }
 
 .movie-details-star {
-    font-size: 35px;
     color: rgba(200, 100, 160);
 }

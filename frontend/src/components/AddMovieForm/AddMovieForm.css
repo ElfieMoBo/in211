@@ -135,3 +135,14 @@
 .input-style {
     background-color: rgba(255, 255, 240);
 }
+
+.add-movie-star {
+    background-color: transparent;
+    border: 0cap;
+    font-size: 35px;
+    color: rgba(255, 255, 240);
+}
+
+.add-movie-star-selected {
+    color: rgba(200, 100, 160);
+}
