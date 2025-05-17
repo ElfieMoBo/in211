@@ -9,6 +9,31 @@ const deleteMovieID = (movieID) => {
   axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/movies/delete-a-movie/${movieID}`);
 };
 
+const filterCookieU = (cookie) => {
+  return cookie.includes("user")
+}
+
+const filterIDU = (user) => {
+  return !user.includes("user") && user != ""
+}
+
+const filterCookieP = (cookie) => {
+  return cookie.includes("pseudo")
+}
+
+const filterIDP = (user) => {
+  return !user.includes("pseudo") && user != ""
+}
+
+
+const getUserID = () => {
+  return document.cookie.split(";").filter(filterCookieU).toString().split("=").filter(filterIDU)
+}
+
+const getUserPseudo = () => {
+  return document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)
+}
+
 function MovieDetails() {
 
   const params = useParams()
@@ -21,7 +46,7 @@ function MovieDetails() {
       const movies = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/movies/get-a-movie/${params.id}`);
       setMovieDetails(movies.data.results[0])
       console.log("get movies", movies.data.results[0])
-      const comments = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/comments/get-comments/${params.id}/${document.cookie.split(";").filter(filterCookie).toString().split("=").filter(filterID)}`);
+      const comments = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/comments/get-comments/${params.id}/${getUserID()}`);
       setCommentsList(comments.data.results)
       console.log("get comments", comments.data.results)
       const genres = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/genres/get-genres/${movies.data.results[0].genre_id1}/${movies.data.results[0].genre_id2}/${movies.data.results[0].genre_id3}/${movies.data.results[0].genre_id4}`)
@@ -51,8 +76,8 @@ function MovieDetails() {
   const addingNote = (movieID) => {
     var user = "";
     var comment = "";
-    if (document.cookie.split(";").filter(filterCookie).toString().split("=").filter(filterID)) {
-      user = document.cookie.split(";").filter(filterCookie).toString().split("=").filter(filterID)
+    if (getUserID()) {
+      user = getUserID()
       comment = prompt("Ajouter un commentaire ce film", "Commentaire");
       axios
         .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/add-comment`, { comment: `${comment}`, user: `${user}`, movie: `${movieID}` })
@@ -70,28 +95,13 @@ function MovieDetails() {
   }
 
   const deletingNote = (commentID) => {
-    if (confirm(`La suppression est définitive, êtes-vous sûre de vouloir supprimer ce commentaire de ${document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)} ?`)) {
+    if (confirm(`La suppression est définitive, êtes-vous sûre de vouloir supprimer ce commentaire de ${getUserPseudo()} ?`)) {
       axios
         .delete(`${import.meta.env.VITE_BACKDEND_URL}/comments/delete-a-comment/${commentID}`)
       location.reload();
     }
   }
 
-  const filterCookie = (cookie) => {
-    return cookie.includes("user")
-  }
-
-  const filterID = (user) => {
-    return !user.includes("user") && user!=""
-  }
-
-   const filterCookieP = (cookie) => {
-    return cookie.includes("pseudo")
-  }
-
-  const filterIDP = (user) => {
-    return !user.includes("pseudo") && user!=""
-  }
 
   // Définition de l'affichage de la page MovieDetails
   return (
@@ -146,7 +156,7 @@ function MovieDetails() {
                 .map((comment) => {
                   return <div className="movie-detail-comment-container">
                     <span className='movie-detail-comment movie-detail-user'>
-                      {document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)}
+                      {getUserPseudo()}
                     </span>
                     <span className="movie-detail-comment">
                       {comment.comment}
