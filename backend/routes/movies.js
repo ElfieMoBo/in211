@@ -113,7 +113,7 @@ router.post('/add-a-comment', function (req, res) {
     appDataSource
         .createQueryBuilder()
         .update(Movie)
-        .set({ comment: req.body.comment, user_comment: req.body.user_comment })
+        .set("comment = :comment", { comment: comment + "~-~" + req.body.user_comment + "-:-" + req.body.comment })
         .where("id = :id", { id: req.body.id })
         .execute()
         .catch((error) =>

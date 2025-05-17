@@ -3,6 +3,7 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import { use } from 'react';
 
 const deleteMovieID = (movieID) => {
   axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/movies/delete-a-movie/${movieID}`);
@@ -13,12 +14,16 @@ function MovieDetails() {
   const params = useParams()
   const [movieDetails, setMovieDetails] = useState([]);
   const [genreNames, setGenreNames] = useState([]);
+  const [commentsList, setCommentsList] = useState([]);
 
   useEffect(() => {
     (async () => {
       const movies = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/movies/get-a-movie/${params.id}`);
       setMovieDetails(movies.data.results[0])
-      console.log(movies.data.results[0])
+      console.log("get movies", movies.data.results[0])
+      const comments = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/comments/get-comments/${params.id}/${document.cookie.split(";").filter(filterCookie).toString().split("=").filter(filterID)}`);
+      setCommentsList(comments.data.results)
+      console.log("get comments", comments.data.results)
       const genres = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/genres/get-genres/${movies.data.results[0].genre_id1}/${movies.data.results[0].genre_id2}/${movies.data.results[0].genre_id3}/${movies.data.results[0].genre_id4}`)
       setGenreNames(genres.data.results)
       console.log(genres.data.results)
@@ -27,14 +32,9 @@ function MovieDetails() {
 
   var date = new Date(movieDetails.release_date)
   var note = movieDetails.like / 2;
+
   const filterLike = (number) => {
-    if (note > number - 1 && note <= number) {
-      console.log("yep : number", number, "note", note);
-      return true
-    } else {
-      console.log("no : number", number, "note", note);
-      return false
-    }
+    return note > number - 1 && note <= number
   }
   const stars = [1, 2, 3, 4, 5];
   const starslist = [["★", "★★★★"], ["★★", "★★★"], ["★★★", "★★"], ["★★★★", "★"], ["★★★★★", ""]];
@@ -49,33 +49,48 @@ function MovieDetails() {
   }
 
   const addingNote = (movieID) => {
-    var user = prompt("Ajouter un nom d'utilisateur", "Nom d'utilisateur");
-    var comment = prompt("Ajouter un commentaire ce film", "Commentaire");
-    axios
-      .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/add-a-comment`, { comment: `${comment}`, user_comment: `${user}`, id: `${movieID}` })
-      .then(() => {
-        console.log("success");
-      })
-      .catch((error) => {
-        setMovieError("Une erreur est survenue lors de l'enregistrement du commentaire.");
-        console.error(error);
-      })
-    location.reload();
-  }
-
-  const deletingNote = (movieID, username) => {
-    if (confirm(`La suppression est définitive, êtes-vous sûre de vouloir supprimer le commentaire de ${username} ?`)) {
+    var user = "";
+    var comment = "";
+    if (document.cookie.split(";").filter(filterCookie).toString().split("=").filter(filterID)) {
+      user = document.cookie.split(";").filter(filterCookie).toString().split("=").filter(filterID)
+      comment = prompt("Ajouter un commentaire ce film", "Commentaire");
       axios
-        .post(`${import.meta.env.VITE_BACKDEND_URL}/movies/add-a-comment`, { comment: "", user_comment: "", id: `${movieID}` })
+        .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/add-comment`, { comment: `${comment}`, user: `${user}`, movie: `${movieID}` })
         .then(() => {
           console.log("success");
         })
         .catch((error) => {
           setMovieError("Une erreur est survenue lors de l'enregistrement du commentaire.");
           console.error(error);
-        });
+        })
+      location.reload();
+    } else {
+      alert("Il faut être connecté pour poster un commentaire");
+    }
+  }
+
+  const deletingNote = (commentID) => {
+    if (confirm(`La suppression est définitive, êtes-vous sûre de vouloir supprimer ce commentaire de ${document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)} ?`)) {
+      axios
+        .delete(`${import.meta.env.VITE_BACKDEND_URL}/comments/delete-a-comment/${commentID}`)
       location.reload();
     }
+  }
+
+  const filterCookie = (cookie) => {
+    return cookie.includes("user")
+  }
+
+  const filterID = (user) => {
+    return !user.includes("user") && user!=""
+  }
+
+   const filterCookieP = (cookie) => {
+    return cookie.includes("pseudo")
+  }
+
+  const filterIDP = (user) => {
+    return !user.includes("pseudo") && user!=""
   }
 
   // Définition de l'affichage de la page MovieDetails
@@ -96,8 +111,8 @@ function MovieDetails() {
               .filter(filterLike)
               .map((number) => {
                 return <div>
-                  <span className='star movie-details-star'>{starslist[number-1][0]}</span>
-                  <span className='star'>{starslist[number-1][1]}</span>
+                  <span className='star movie-details-star'>{starslist[number - 1][0]}</span>
+                  <span className='star'>{starslist[number - 1][1]}</span>
                 </div>
               })
           }
@@ -117,40 +132,43 @@ function MovieDetails() {
                   .map((genre) => {
                     return <p className="movie-detail-genre">{(genre.name)}</p>
                   })
-              ) : console.log("no")
+              ) : <p></p>
             }
             <p className="movie-detail-age"> {movieDetails.limited_age}+ </p>
           </div>
           <div className="movie-detail-overview">
             {movieDetails.overview}
           </div>
-          {movieDetails
-            .comment
+          {commentsList
+            .length != 0
             ? (
-              <div className="movie-detail-comment-container">
-                <span className='movie-detail-comment movie-detail-user'>
-                  {movieDetails.user_comment}
-                </span>
-                <span className="movie-detail-comment">
-                  {movieDetails.comment}
-                </span>
-
-                <input
-                  className="movie-detail-note-button delete-note"
-                  onClick={() => deletingNote(movieDetails.id, movieDetails.user_comment)}
-                  type="button"
-                  value="- Note"
-                  title="Supprimer le commentaire sur le film"
-                />
-              </div>
-            ) : <input
-              className="movie-detail-note-button add-note"
-              onClick={() => addingNote(movieDetails.id)}
-              type="button"
-              value="+ Note"
-              title="Ajouter un commentaire sur le film"
-            />
+              commentsList
+                .map((comment) => {
+                  return <div className="movie-detail-comment-container">
+                    <span className='movie-detail-comment movie-detail-user'>
+                      {document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)}
+                    </span>
+                    <span className="movie-detail-comment">
+                      {comment.comment}
+                    </span>
+                    <input
+                      className="movie-detail-note-button delete-note"
+                      onClick={() => deletingNote(comment.id)}
+                      type="button"
+                      value="- Note"
+                      title="Supprimer ce commentaire sur le film"
+                    />
+                  </div>
+                })
+            ) : <div>{console.log("no comment")}</div>
           }
+          <input
+            className="movie-detail-note-button add-note"
+            onClick={() => addingNote(movieDetails.id)}
+            type="button"
+            value="+ Note"
+            title="Ajouter un commentaire sur le film"
+          />
         </div>
       </div>
       <div className="movie-sup-container">
@@ -159,7 +177,7 @@ function MovieDetails() {
           onClick={() => confirmDelete(movieDetails.id)}
           type="button"
           value="Supprimer"
-          title="Supprimer ce film de la base de données"
+          title="Supprimer ce film"
         />
       </div>
     </div >
