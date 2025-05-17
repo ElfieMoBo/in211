@@ -12,24 +12,18 @@ const deleteMovieID = (movieID) => {
 const filterCookieU = (cookie) => {
   return cookie.includes("user")
 }
-
 const filterIDU = (user) => {
   return !user.includes("user") && user != ""
 }
-
 const filterCookieP = (cookie) => {
   return cookie.includes("pseudo")
 }
-
 const filterIDP = (user) => {
   return !user.includes("pseudo") && user != ""
 }
-
-
 const getUserID = () => {
   return document.cookie.split(";").filter(filterCookieU).toString().split("=").filter(filterIDU)
 }
-
 const getUserPseudo = () => {
   return document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)
 }

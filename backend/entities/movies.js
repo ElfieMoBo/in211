@@ -22,11 +22,7 @@ const Movie = new typeorm.EntitySchema({
     genre_id2: { type: Number },
     genre_id3: { type: Number },
     genre_id4: { type: Number },
-    user_comment: {
-      type: String,
-      nullable: true,
-    },
-    comment: {
+    user: {
       type: String,
       nullable: true,
     },

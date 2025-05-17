@@ -2,6 +2,15 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import './AddMovieForm.css';
 
+const filterCookieU = (cookie) => {
+    return cookie.includes("user")
+}
+const filterIDU = (user) => {
+    return !user.includes("user") && user != ""
+}
+const getUserID = () => {
+    return document.cookie.split(";").filter(filterCookieU).toString().split("=").filter(filterIDU)
+}
 
 const DEFAULT_FORM_VALUES = {
     title: '',
@@ -15,6 +24,7 @@ const DEFAULT_FORM_VALUES = {
     genre_id2: 0,
     genre_id3: 0,
     genre_id4: 0,
+    user: getUserID().toString(),
 };
 
 const registerMovie = () => {
@@ -34,6 +44,11 @@ const registerMovie = () => {
         setMovieError(null);
         if (formValues.title === '') {
             setMovieError('Le titre du film est obligatoire')
+            console.error('Aucun titre renseignée : le champ est obligatoire');
+            return;
+        }
+        if (!getUserID().toString()) {
+            setMovieError('Un compte est nécessaire pour ajouter un film')
             console.error('Aucun titre renseignée : le champ est obligatoire');
             return;
         }
@@ -72,6 +87,8 @@ const useFetchGenre = () => {
     return [moviesGenre, setGenreList];
 }
 
+
+
 function AddMovieForm() {
     const [formValues, setFormValues] = useState(DEFAULT_FORM_VALUES);
     const { saveMovie, movieError, movieSuccess } = registerMovie();
@@ -100,6 +117,7 @@ function AddMovieForm() {
 
     return (
         <div className="container">
+            {document.cookie}
             <form
                 className="add-movie-form"
                 onSubmit={(event) => saveMovie(event, formValues, setFormValues)}

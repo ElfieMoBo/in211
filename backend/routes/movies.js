@@ -52,6 +52,7 @@ router.post('/new-movie', function (req, res) {
         genre_id2: req.body.genre_id2,
         genre_id3: req.body.genre_id3,
         genre_id4: req.body.genre_id4,
+        user: req.body.user,
     });
     // Inserting this new movie in the BDD
     movieRepository

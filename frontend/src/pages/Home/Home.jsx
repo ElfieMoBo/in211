@@ -7,6 +7,15 @@ import { useNavigate } from 'react-router-dom';
 import Movie from '../../components/Movie/Movie';
 import MovieDetails from '../MovieDetails/MovieDetails';
 
+const filterCookieU = (cookie) => {
+  return cookie.includes("user")
+}
+const filterIDU = (user) => {
+  return !user.includes("user") && user != ""
+}
+const getUserID = () => {
+  return document.cookie.split(";").filter(filterCookieU).toString().split("=").filter(filterIDU)
+}
 
 const useFetchMovies = () => {
   // Fonction qui permet de récupérer la liste des films dans la base de données
@@ -72,11 +81,20 @@ function Home() {
       return true
     }
   }
+  const filterUser = (movie) => {
+    if (!getUserID().toString()) {
+      return movie.user == null
+    }
+    return movie.user == getUserID().toString() || movie.user == null
+
+  }
+
 
   const filterPage = (page) => {
     var movieTotal = moviesList
       .filter(filterTitle)
       .filter(filterGenre)
+      .filter(filterUser)
       .length;
     var pageTotal = Math.ceil(movieTotal / moviePerPage);
     if (page < pageTotal) {
@@ -203,7 +221,7 @@ function Home() {
             <option key={genre.id} value={genre.id}>{genre.name}</option>
           )}
         </select>
-        
+
         {/* Création d'un boutton pour ajouter un film */}
         <input
           className="add-movie-button"
@@ -226,6 +244,7 @@ function Home() {
         {moviesList
           .filter(filterTitle)
           .filter(filterGenre)
+          .filter(filterUser)
           .slice(start, start + moviePerPage)
           .length != 0
           ? (
@@ -233,6 +252,7 @@ function Home() {
               {moviesList
                 .filter(filterTitle)
                 .filter(filterGenre)
+                .filter(filterUser)
                 .sort(sortByItem(sortChosen))
                 .slice(start, start + moviePerPage)
                 .map((movie) => {
