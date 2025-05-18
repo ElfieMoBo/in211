@@ -26,19 +26,15 @@ function UserDetails() {
     const deleteUserID = (userID) => {
         axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/users/delete/${userID}`);
     };
-    var attributs = {
-        domain: location.hostname,
-        path: '/'
-    }
     const cookieDel = (n, o) => {
-        console.log("deleting cookies")
-        document.cookie = n + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=" + (o.path ? o.path : '/') + (o.domain ? ";domain=" + o.domain : '');
+        document.cookie = n + "=;max-age=1";
     }
     const signoff = () => {
-        console.log("asking to delete cookies")
-        cookieDel("user", attributs)
-        cookieDel("pseudo", attributs)
-    };
+        cookieDel("user")
+        cookieDel("pseudo")
+        location.reload();
+        console.log(document.cookie)
+    }
     const confirmDelete = (userID) => {
         if (confirm("La suppression est définitive, êtes-vous sûre de vouloir supprimer cet utilisateur ?")) {
             signoff()
@@ -68,9 +64,17 @@ function UserDetails() {
                     />
                 </div>
                 <div className="information-container">
-                    <span className="movie-detail-title">
-                        {user.firstname} {user.lastname.toUpperCase()}
-                    </span>
+
+                    {user
+                        .length != 0
+                        ? (
+                            <span className="movie-detail-title">
+                                {user.firstname} {user.lastname.toString().toUpperCase()}
+                            </span>
+                        ) : <span>
+                            {console.log("user", user)}
+                        </span>}
+
                     <p className="movie-detail-age"> {user.age} </p>
                 </div>
             </div>

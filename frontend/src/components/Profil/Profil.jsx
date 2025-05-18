@@ -18,9 +18,7 @@ function Profil({ user }) {
     const logDelete = true;
 
     const userManagement = (user) => {
-        console.log(user.pseudo)
-        console.log(getUserPseudo())
-        user.pseudo != getUserPseudo() ? (
+        !getUserPseudo().toString() ? (
             navigate(`/login/true/${user.pseudo}`)
         ) : navigate(`/profils/${user.pseudo}`)
     }

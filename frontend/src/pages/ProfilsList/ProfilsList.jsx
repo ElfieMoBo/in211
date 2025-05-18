@@ -5,6 +5,15 @@ import axios from 'axios';
 
 import Profil from '../../components/Profil/Profil';
 
+const filterCookieP = (cookie) => {
+    return cookie.includes("pseudo")
+}
+const filterIDP = (user) => {
+    return !user.includes("pseudo") && user != ""
+}
+const getUserPseudo = () => {
+    return document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)
+}
 
 function displayProfils() {
     const [usersList, setUsersList] = useState([]);
@@ -18,18 +27,14 @@ function displayProfils() {
         })()
     }, []);
 
-    var attributs = {
-        domain: location.hostname,
-        path: '/'
-    }
     const cookieDel = (n, o) => {
-        document.cookie = n + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=" + (o.path ? o.path : '/') + (o.domain ? ";domain=" + o.domain : '');
+        document.cookie = n + "=;max-age=0";
     }
     const signoff = () => {
-        cookieDel("user", attributs)
-        cookieDel("pseudo", attributs)
+        cookieDel("user")
+        cookieDel("pseudo")
         location.reload();
-        navigate('/');
+        console.log(document.cookie)
     }
 
     return (
@@ -55,7 +60,7 @@ function displayProfils() {
                     <button
                         className="user-icon add-user"
                         onClick={() => navigate("/login/false/false")}
-                    >                    +
+                    >+
                     </button>
                     <div className="user-pseudo" >
                         Ajouter un profil

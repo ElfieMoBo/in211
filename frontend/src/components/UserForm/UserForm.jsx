@@ -3,6 +3,16 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './UserForm.css';
 
+const filterCookieP = (cookie) => {
+    return cookie.includes("pseudo")
+}
+const filterIDP = (user) => {
+    return !user.includes("pseudo") && user != ""
+}
+const getUserPseudo = () => {
+    return document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)
+}
+
 const useSaveUser = () => {
   const [userCreationError, setUserCreationError] = useState(null);
   const [userCreationSuccess, setUserCreationSuccess] = useState(null);
@@ -55,17 +65,6 @@ const useLogIn = () => {
       setUserLogInSuccess(null);
     }, 3000);
   };
-  var attributs = {
-    domain: location.hostname,
-    path: '/'
-  }
-  const cookieDel = (n, o) => {
-    document.cookie = n + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=" + (o.path ? o.path : '/') + (o.domain ? ";domain=" + o.domain : '');
-  }
-  const signoff = () => {
-    cookieDel("user", attributs)
-    cookieDel("pseudo", attributs)
-  }
 
   const logIn = (event, formLogIn, setFormLogIn) => {
     // This avoid page reload
@@ -77,8 +76,10 @@ const useLogIn = () => {
       return;
     }
 
-
-    signoff();
+    if (getUserPseudo().toString()) {
+      alert("Vous êtes déjà connecté en tant que " + getUserPseudo().toString() + ". \nDéconnectez vous pour vous connecter à un autre utilisateur.");
+      return;
+    }
 
     axios
       .post(`${import.meta.env.VITE_BACKDEND_URL}/users/login`, formLogIn)
