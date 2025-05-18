@@ -21,15 +21,16 @@
 
 * [x] ETQU, sur la page de détails d'un film, je peux ajouter un commentaire qui contient une note au nom d’un user 
     * [x] Regarder comment stocker les commentaires 
-    * [ ] Stocker plusieurs commentaires ? Pour l'instant, juste un seul
+    * [x] Stocker plusieurs commentaires ? Pour l'instant, juste un seul
 
 * [x] ETQU, sur la page d’accueil je vois une liste de films triés par nombre de likes
 
 <span style="color:rgb(120, 150, 50);"><font size="5">**Fonctionnalités supplémentaires**</span></font>
 
-* [ ] Le site permet de changer d'utilisateur et les recommandations sont stockées par utilisateur (on ne demande pas nécessairement un système complexe d'authentification, mais un moyen simple de changer d'utilisateur)
-  * [ ] Changer d'utilisateur
-  * [ ] Se déconnecter
-  * [ ] Garder les recommandations par personnes
+* [x] Le site permet de changer d'utilisateur et les recommandations sont stockées par utilisateur (on ne demande pas nécessairement un système complexe d'authentification, mais un moyen simple de changer d'utilisateur)
+  * [x] Changer d'utilisateur
+  * [x] Se déconnecter
+  * [x] Garder les recommandations par personnes
+  * [x] Ajouter et supprimer un profil
 
 * [x] La liste des films en page d'accueil est paginée ou possède un bouton "Load more" afin d'éviter d'éventuels problèmes de performance s'il y a beaucoup de films à afficher
