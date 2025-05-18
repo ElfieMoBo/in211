@@ -1,20 +1,64 @@
-.add-user-form > :not(:last-child) {
-  margin-right: 10px;
+.log-sign-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 20px;
 }
 
-.add-user-input {
-  padding: 5px;
+.connection-text {
+  padding: 0%;
 }
 
-.add-user-button {
-  cursor: pointer;
-  padding: 5px;
+.user-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+  flex-wrap: wrap;
+  width: 80%;
 }
 
-.user-creation-success {
-  color: green;
+.user-input {
+  width: 30%;
 }
 
-.user-creation-error {
-  color: red;
+.user-button {
+  align-self: center;
+  width: 20%
+}
+
+.change-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  width: 40%;
+  font-size: 15px;
+  font-style: italic;
+  gap: 2%
+}
+
+.little-button {
+  align-self: center;
+  justify-self: center;
+  width: 35%
+}
+
+.form-detail {
+  font-size: 15px;
+  font-weight: bold;
+}
+
+.success-text {
+  color: rgba(200, 215, 80);
+  font-weight: bold;
+  padding-bottom: 1%;
+}
+
+.error-text {
+  color: rgba(200, 100, 160);
+  font-weight: bold;
+  padding-bottom: 1%;
 }

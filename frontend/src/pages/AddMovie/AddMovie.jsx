@@ -3,7 +3,7 @@ import AddMovieForm from '../../components/AddMovieForm/AddMovieForm';
 
 function AddMovie() {
     return (
-        <div className="container">
+        <div className="container-start">
             <p className="form-title"> Formulaire pour ajouter un film </p>
             <div className="form-container-box">
                 <AddMovieForm />

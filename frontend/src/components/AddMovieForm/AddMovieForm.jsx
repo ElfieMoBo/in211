@@ -116,8 +116,7 @@ function AddMovieForm() {
     }
 
     return (
-        <div className="container">
-            {document.cookie}
+        <div className="container-center">
             <form
                 className="add-movie-form"
                 onSubmit={(event) => saveMovie(event, formValues, setFormValues)}

@@ -86,9 +86,7 @@ function Home() {
       return movie.user == null
     }
     return movie.user == getUserID().toString() || movie.user == null
-
   }
-
 
   const filterPage = (page) => {
     var movieTotal = moviesList
@@ -178,8 +176,7 @@ function Home() {
 
   // Définition de l'affichage de la page
   return (
-    <div className="container">
-      {document.cookie}
+    <div className="container-center">
       <div className="home-banner">
         <img
           className="site-logo"
@@ -187,7 +184,7 @@ function Home() {
           width="180px"
         >
         </img>
-        <span className="movie-annonce">Liste des films</span>
+        <span className="annonce">Liste des films</span>
       </div>
       <div className="search-container">
         {/* Création d'une boîte de texte avec le texte qui se rajoute en dessous */}

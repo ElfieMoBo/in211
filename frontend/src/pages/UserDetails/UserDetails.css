@@ -1,0 +1,10 @@
+.container-row-start {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: space-around;
+    width: 95%;
+    gap: 5%;
+    padding-top: 10px;
+    margin-top: 10px
+}

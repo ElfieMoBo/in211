@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom'
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
-import { use } from 'react';
 
 const deleteMovieID = (movieID) => {
   axios.delete(`${import.meta.env.VITE_BACKDEND_URL}/movies/delete-a-movie/${movieID}`);
@@ -28,8 +27,9 @@ const getUserPseudo = () => {
   return document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)
 }
 
-function MovieDetails() {
 
+
+function MovieDetails() {
   const params = useParams()
   const [movieDetails, setMovieDetails] = useState([]);
   const [genreNames, setGenreNames] = useState([]);
@@ -99,7 +99,7 @@ function MovieDetails() {
 
   // Définition de l'affichage de la page MovieDetails
   return (
-    <div className="container">
+    <div className="container-start">
       {/* Création du visuel : affiche, titre, genre, date, résumé */}
       <div className="movie-visual-container">
         <div className="movie-detail-left">
