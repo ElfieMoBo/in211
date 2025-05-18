@@ -70,7 +70,7 @@ function MovieDetails() {
   const addingNote = (movieID) => {
     var user = "";
     var comment = "";
-    if (getUserID()) {
+    if (getUserID().toString()) {
       user = getUserID()
       comment = prompt("Ajouter un commentaire ce film", "Commentaire");
       axios

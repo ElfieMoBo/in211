@@ -3,6 +3,16 @@ import './Header.css';
 import home from './home.png'
 import logo from './logo.png'
 
+const filterCookieP = (cookie) => {
+  return cookie.includes("pseudo")
+}
+const filterIDP = (user) => {
+  return !user.includes("pseudo") && user != ""
+}
+const getUserPseudo = () => {
+  return document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)
+}
+
 const Header = () => {
   return (
     <div className="Header-container">
@@ -28,11 +38,10 @@ const Header = () => {
       <div className="right">
         <Link className="Link" to="/profils">
           <button
+            title={getUserPseudo()}
             className="header-profil"
-            height="30px"
-            width="30px"
           >
-            M
+            {getUserPseudo() ? (getUserPseudo().toString().substring(0, 1).toUpperCase()) : " "}
           </button>
         </Link>
       </div>

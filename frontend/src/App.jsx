@@ -6,6 +6,7 @@ import { Root } from './components/Root/Root';
 import AddMovie from './pages/AddMovie/AddMovie';
 import ProfilsList from './pages/ProfilsList/ProfilsList';
 import AddUserForm from './components/UserForm/UserForm';
+import UserDetails from './pages/UserDetails/UserDetails'
 
 function App() {
   return (
@@ -15,7 +16,8 @@ function App() {
         <Route path="/details/:id" element={<MovieDetails />} />
         <Route path="/add-a-movie" element={<AddMovie />} />
         <Route path="/profils" element={<ProfilsList />} />
-        <Route path="/login" element={<AddUserForm />} />
+        <Route path="/login/:sigin/:pseudo" element={<AddUserForm />} />
+        <Route path="/profils/:pseudo" element={<UserDetails />} />
       </Routes>
     </Root>
   );

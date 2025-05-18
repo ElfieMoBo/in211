@@ -1,20 +1,7 @@
 import { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import './UserForm.css';
-
-const DEFAULT_FORM_SIGN_IN = {
-  email: '',
-  firstname: '',
-  lastname: '',
-  pseudo: '',
-  age: '',
-  passwd: '',
-};
-
-const DEFAULT_FORM_LOG_IN = {
-  pseudo: '',
-  passwd: '',
-};
 
 const useSaveUser = () => {
   const [userCreationError, setUserCreationError] = useState(null);
@@ -32,8 +19,15 @@ const useSaveUser = () => {
 
     setUserCreationError(null);
     if (formValues.email === '') {
-      console.error('Missing email, this field is required');
-
+      setUserCreationError('Un email est obligatoire pour créer un compte');
+      return;
+    }
+    if (formValues.pseudo === '') {
+      setUserCreationError("Un nom d'utilisateur est obligatoire pour créer un compte");
+      return;
+    }
+    if (formValues.passwd != formValues.passwd2) {
+      setUserCreationError("Les mots de passe ne correspondent pas");
       return;
     }
 
@@ -44,7 +38,7 @@ const useSaveUser = () => {
         setFormValues(DEFAULT_FORM_SIGN_IN);
       })
       .catch((error) => {
-        setUserCreationError('An error occured while creating new user.');
+        setUserCreationError("Une erreur est survenue lors de la création du compte");
         console.error(error);
       });
   };
@@ -61,6 +55,17 @@ const useLogIn = () => {
       setUserLogInSuccess(null);
     }, 3000);
   };
+  var attributs = {
+    domain: location.hostname,
+    path: '/'
+  }
+  const cookieDel = (n, o) => {
+    document.cookie = n + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=" + (o.path ? o.path : '/') + (o.domain ? ";domain=" + o.domain : '');
+  }
+  const signoff = () => {
+    cookieDel("user", attributs)
+    cookieDel("pseudo", attributs)
+  }
 
   const logIn = (event, formLogIn, setFormLogIn) => {
     // This avoid page reload
@@ -72,14 +77,20 @@ const useLogIn = () => {
       return;
     }
 
+
+    signoff();
+
     axios
       .post(`${import.meta.env.VITE_BACKDEND_URL}/users/login`, formLogIn)
-      .then(() => {
-        document.cookie = `pseudo=${formLogIn.pseudo}; SameSite=None; Secure`;
+      .then((response) => {
+        document.cookie = `user=${response.data[0].id}; SameSite=None; Secure`;
+        document.cookie = `pseudo=${response.data[0].pseudo}; SameSite=None; Secure`;
+        location.reload();
         displayLogInSuccessMessage();
         setFormLogIn(DEFAULT_FORM_LOG_IN);
       })
       .catch((error) => {
+        console.log(error)
         setUserLogInError(error.response.data.message);
         console.error("erreur : ", error.response.data.message);
       });
@@ -88,26 +99,47 @@ const useLogIn = () => {
   return { logIn, userLogInError, userLogInSuccess };
 };
 
-function UserForm(logSign) {
+function UserForm() {
+  const params = useParams();
+  var pseudo = '';
+  params.pseudo.toString() != "false" ? (
+    pseudo = params.pseudo
+  ) : pseudo = ''
+
+  const DEFAULT_FORM_SIGN_IN = {
+    email: '',
+    firstname: '',
+    lastname: '',
+    pseudo: '',
+    age: '',
+    passwd: '',
+    passwd2: '',
+  };
+
+  const DEFAULT_FORM_LOG_IN = {
+    pseudo: pseudo,
+    passwd: '',
+  };
+
   const [formLogIn, setFormLogIn] = useState(DEFAULT_FORM_LOG_IN);
   const [formSignIn, setFormSignIn] = useState(DEFAULT_FORM_SIGN_IN);
   const { saveUser, userCreationError, userCreationSuccess } = useSaveUser();
-  const [logOrSign, setLogOrSign] = useState(logSign);
+  const [logOrSign, setLogOrSign] = useState(params.sigin);
   const { logIn, userLogInError, userLogInSuccess } = useLogIn();
 
+
   return (
-    <div>
-      {document.cookie}
-      {logOrSign
+    <div className="container-center">
+      {logOrSign.toString() === "true"
         ? (
-          <div className="login">
-            <p> Connexion </p>
+          <div className="log-sign-container">
+            <p className="annonce connection-text"> Connexion </p>
             <form
               className="user-form"
               onSubmit={(event) => logIn(event, formLogIn, setFormLogIn)}
             >
               <input
-                className="user-input"
+                className="user-input input"
                 type="Pseudo"
                 placeholder="Nom d'utilisateur"
                 value={formLogIn.pseudo}
@@ -116,114 +148,137 @@ function UserForm(logSign) {
                 }
               />
               <input
-                className="user-input"
+                type="password"
+                className="user-input input"
                 placeholder="Mot de passe"
                 value={formLogIn.passwd}
                 onChange={(event) =>
                   setFormLogIn({ ...formLogIn, passwd: event.target.value })
                 }
               />
-              <button className="user-button" type="submit">
+              <button className="user-button input" type="submit">
                 Connexion
               </button>
             </form>
             {
               userLogInSuccess !== null && (
-                <div className="user-success">{userLogInSuccess}</div>
+                <div className="success-text">{userLogInSuccess}</div>
               )
             }
             {
               userLogInError !== null && (
-                <div className="user-error">{userLogInError}</div>
+                <div className="error-text">{userLogInError}</div>
               )
             }
-            <span> Aucun compte ? </span>
+            <div className="change-container">
+              <span> Aucun compte ? </span>
+              <input
+                className=""
+                onClick={() => setLogOrSign(!logOrSign)}
+                type="button"
+                value="Créer un compte"
+              />
+            </div>
+          </div>
+        ) :
+        <div className="log-sign-container">
+          <p className="annonce connection-text"> Création d'un nouveau compte utilisateur </p>
+          <form
+            className="user-form"
+            onSubmit={(event) => saveUser(event, formSignIn, setFormSignIn)}
+          >
+            <span className="form-detail"> Adresse mail (requis) : </span>
+            <input
+              className="user-input input"
+              type="email"
+              placeholder="Email"
+              value={formSignIn.email}
+              onChange={(event) =>
+                setFormSignIn({ ...formSignIn, email: event.target.value })
+              }
+            />
+            <span className="form-detail"> Nom de famille : </span>
+            <input
+              className="user-input input"
+              placeholder="Nom"
+              value={formSignIn.lastname}
+              onChange={(event) =>
+                setFormSignIn({ ...formSignIn, lastname: event.target.value })
+              }
+            />
+            <span className="form-detail"> Prénom : </span>
+            <input
+              className="user-input input"
+              placeholder="Prénom"
+              value={formSignIn.firstname}
+              onChange={(event) =>
+                setFormSignIn({ ...formSignIn, firstname: event.target.value })
+              }
+            />
+            <span className="form-detail"> Nom d'utilisateur (requis) : </span>
+            <input
+              className="user-input input"
+              placeholder="Nom d'utilisateur"
+              value={formSignIn.pseudo}
+              onChange={(event) =>
+                setFormSignIn({ ...formSignIn, pseudo: event.target.value })
+              }
+            />
+            <span className="form-detail"> Age de l'utilisateur : </span>
+            <input
+              type="number"
+              className="user-input input"
+              placeholder="Age"
+              value={formSignIn.age}
+              onChange={(event) =>
+                setFormSignIn({ ...formSignIn, age: event.target.value })
+              }
+            />
+            <span className="form-detail"> Mot de passe : </span>
+            <input
+              type="password"
+              className="user-input input"
+              placeholder="Mot de passe"
+              value={formSignIn.passwd}
+              onChange={(event) =>
+                setFormSignIn({ ...formSignIn, passwd: event.target.value })
+              }
+            />
+            <span className="form-detail"> Mot de passe (vérification) : </span>
+            <input
+              type="password"
+              className="user-input input"
+              placeholder="Mot de passe"
+              value={formSignIn.passwd2}
+              onChange={(event) =>
+                setFormSignIn({ ...formSignIn, passwd2: event.target.value })
+              }
+            />
+            <button className="user-button input" type="submit">
+              Ajouter cet utilisateur
+            </button>
+          </form>
+          {
+            userCreationSuccess !== null && (
+              <div className="success-text">{userCreationSuccess}</div>
+            )
+          }
+          {
+            userCreationError !== null && (
+              <div className="error-text">{userCreationError}</div>
+            )
+          }
+          <div className="change-container">
+            <span> Déjà un compte ? </span>
             <input
               className="log-sign-button"
               onClick={() => setLogOrSign(!logOrSign)}
               type="button"
-              value="Créer un compte"
+              value="Se connecter"
             />
           </div>
-  ) :
-  <div className="sign-in">
-    <p> Création d'un nouveau compte utilisateur </p>
-    <form
-      className="add-user-form"
-      onSubmit={(event) => saveUser(event, formSignIn, setFormSignIn)}
-    >
-      <input
-        className="add-user-input"
-        type="email"
-        placeholder="Email"
-        value={formSignIn.email}
-        onChange={(event) =>
-          setFormSignIn({ ...formSignIn, email: event.target.value })
-        }
-      />
-      <input
-        className="add-user-input"
-        placeholder="Nom"
-        value={formSignIn.lastname}
-        onChange={(event) =>
-          setFormSignIn({ ...formSignIn, lastname: event.target.value })
-        }
-      />
-      <input
-        className="add-user-input"
-        placeholder="Prénom"
-        value={formSignIn.firstname}
-        onChange={(event) =>
-          setFormSignIn({ ...formSignIn, firstname: event.target.value })
-        }
-      />
-      <input
-        className="add-user-input"
-        placeholder="Nom d'utilisateur"
-        value={formSignIn.pseudo}
-        onChange={(event) =>
-          setFormSignIn({ ...formSignIn, pseudo: event.target.value })
-        }
-      />
-      <input
-        className="add-user-input"
-        placeholder="Age"
-        value={formSignIn.age}
-        onChange={(event) =>
-          setFormSignIn({ ...formSignIn, age: event.target.value })
-        }
-      />
-      <input
-        className="add-user-input"
-        placeholder="Mot de passe"
-        value={formSignIn.passwd}
-        onChange={(event) =>
-          setFormSignIn({ ...formSignIn, passwd: event.target.value })
-        }
-      />
-      <button className="add-user-button" type="submit">
-        Ajouter cet utilisateur
-      </button>
-    </form>
-    {
-      userCreationSuccess !== null && (
-        <div className="user-creation-success">{userCreationSuccess}</div>
-      )
-    }
-    {
-      userCreationError !== null && (
-        <div className="user-creation-error">{userCreationError}</div>
-      )
-    }
-    <span> Déjà un compte ? </span>
-    <input
-      className="log-sign-button"
-      onClick={() => setLogOrSign(!logOrSign)}
-      type="button"
-      value="Se connecter"
-    />
-  </div>
-}
+        </div>
+      }
 
     </div >
   );

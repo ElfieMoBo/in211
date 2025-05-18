@@ -1,5 +1,6 @@
 import './ProfilsList.css';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
 import Profil from '../../components/Profil/Profil';
@@ -7,6 +8,7 @@ import Profil from '../../components/Profil/Profil';
 
 function displayProfils() {
     const [usersList, setUsersList] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         (async () => {
@@ -16,9 +18,22 @@ function displayProfils() {
         })()
     }, []);
 
+    var attributs = {
+        domain: location.hostname,
+        path: '/'
+    }
+    const cookieDel = (n, o) => {
+        document.cookie = n + "=;expires=Thu, 01 Jan 1970 00:00:01 GMT;path=" + (o.path ? o.path : '/') + (o.domain ? ";domain=" + o.domain : '');
+    }
+    const signoff = () => {
+        cookieDel("user", attributs)
+        cookieDel("pseudo", attributs)
+        location.reload();
+        navigate('/');
+    }
+
     return (
         <div className="user-container">
-            {document.cookie}
             <p className="user-text">
                 Liste des utilisateurs
             </p>
@@ -38,7 +53,8 @@ function displayProfils() {
                 }
                 <div className="profil-container" >
                     <button
-                        className="user-icon"
+                        className="user-icon add-user"
+                        onClick={() => navigate("/login/false/false")}
                     >                    +
                     </button>
                     <div className="user-pseudo" >
@@ -46,12 +62,14 @@ function displayProfils() {
                     </div>
 
                 </div>
-                <input
-                    className="log-sign-button"
-                    onClick={() => document.cookie = `pseudo=; SameSite=None; Secure`}
-                type="button"
-                value="Se déconnecter"
-                />
+                <div className="container-center">
+                    <input
+                        className="log-sign-button input"
+                        onClick={() => signoff()}
+                        type="button"
+                        value="Se déconnecter"
+                    />
+                </div>
             </div>
         </div>
     );

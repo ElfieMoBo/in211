@@ -1,6 +1,7 @@
 .user-container {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
 }
 
@@ -28,4 +29,12 @@
     align-items: auto;
     row-gap: 10px;
     column-gap: 20px;
+}
+
+.add-user {
+    background-color: rgb(186, 186, 186);
+}
+
+.log-sign-button{
+    align-self: center;
 }
