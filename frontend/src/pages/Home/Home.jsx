@@ -265,6 +265,7 @@ function Home() {
           ) : moviesList
             .filter(filterTitle)
             .filter(filterGenre)
+            .filter(filterUser)
             .slice(0, 0 + moviePerPage)
             .length != 0
             ? (
