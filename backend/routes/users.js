@@ -67,7 +67,6 @@ router.get('/user-by-pseudo/:pseudo', function (req, res) {
 });
 
 router.post('/login', function (req, res) {
-  console.log(req.body)
   const hash = createHash('sha256').update(req.body.passwd).digest('hex');
   appDataSource
     .getRepository(User)
@@ -77,7 +76,6 @@ router.post('/login', function (req, res) {
       }
     })
     .then(function (user) {
-      console.log("user", user)
       user[0].shadow == hash ? (
         res.status(201).json(user)
       ) : res.status(400).json({

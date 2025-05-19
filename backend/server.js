@@ -23,7 +23,7 @@ appDataSource
     app.use(express.urlencoded({ extended: false }));
 
     // Register routes
-    apiRouter.get('/', (req, res) => {
+    apiRouter.get('/r', (req, res) => {
       res.send('Hello from Express!');
     });
     apiRouter.use('/users', usersRouter);
@@ -33,6 +33,13 @@ appDataSource
 
     // Register API router
     app.use('/api', apiRouter);
+
+    // Register frontend
+    const publicPath = new URL("./public", import.meta.url).pathname;
+    app.use(express.static(publicPath));
+    app.get("*", (req, res) => {
+      res.sendFile(path.join(publicPath, "index.html"));
+    });
 
     // Register 404 middleware and error handler
     app.use(routeNotFoundJsonHandler); // this middleware must be registered after all routes to handle 404 correctly

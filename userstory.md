@@ -34,3 +34,9 @@
   * [x] Ajouter et supprimer un profil
 
 * [x] La liste des films en page d'accueil est paginée ou possède un bouton "Load more" afin d'éviter d'éventuels problèmes de performance s'il y a beaucoup de films à afficher
+
+<span style="color:rgb(120, 150, 50);"><font size="5">**Bugs**</span></font>
+
+* [x] Quand on recherche un film ajouté par un autre utilisateur $\rightarrow$ `too many re-renders`
+* [ ] Quand on se déconnecte $\rightarrow$ connection à un ancien user...
+* [ ] Message d'erreur affiché à chaque fois quand on créer un user

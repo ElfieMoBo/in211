@@ -110,7 +110,6 @@ router.delete('/delete-a-movie/:movieID', function (req, res) {
 
 
 router.post('/add-a-comment', function (req, res) {
-    console.log(req.body)
     appDataSource
         .createQueryBuilder()
         .update(Movie)
