@@ -27,7 +27,6 @@ const useFetchMovies = () => {
       // .get('https://api.themoviedb.org/3/trending/movie/week?page=1&api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb')
       .then((reponse) => {
         setList(reponse.data.results)
-        console.log(reponse)
       })
       .catch((error) => {
         console.log(error)
@@ -46,7 +45,6 @@ const useFetchGenre = () => {
       .get('https://api.themoviedb.org/3/genre/movie/list?api_key=15d2ea6d0dc1d476efbca3eba2b9bbfb')
       .then((reponse) => {
         setGenreList(reponse.data.genres)
-        console.log(reponse)
       })
       .catch((error) => {
         console.log(error)
@@ -158,6 +156,7 @@ function Home() {
             return <input
               className="pagination-button"
               type="button"
+              key={page + 1}
               value={page + 1}
               onClick={() => setStart(((page + 1) - 1) * moviePerPage)}
             />

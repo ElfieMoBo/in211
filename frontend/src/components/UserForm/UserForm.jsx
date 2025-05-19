@@ -1,17 +1,28 @@
 import { useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import './UserForm.css';
 
 const filterCookieP = (cookie) => {
-    return cookie.includes("pseudo")
+  return cookie.includes("pseudo")
 }
 const filterIDP = (user) => {
-    return !user.includes("pseudo") && user != ""
+  return !user.includes("pseudo") && user != ""
 }
 const getUserPseudo = () => {
-    return document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)
+  return document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)
 }
+
+const DEFAULT_FORM_SIGN_IN = {
+  email: '',
+  firstname: '',
+  lastname: '',
+  pseudo: '',
+  age: '',
+  passwd: '',
+  passwd2: '',
+};
 
 const useSaveUser = () => {
   const [userCreationError, setUserCreationError] = useState(null);
@@ -56,50 +67,6 @@ const useSaveUser = () => {
   return { saveUser, userCreationError, userCreationSuccess };
 };
 
-const useLogIn = () => {
-  const [userLogInError, setUserLogInError] = useState(null);
-  const [userLogInSuccess, setUserLogInSuccess] = useState(null);
-  const displayLogInSuccessMessage = () => {
-    setUserLogInSuccess('Connexion réussie');
-    setTimeout(() => {
-      setUserLogInSuccess(null);
-    }, 3000);
-  };
-
-  const logIn = (event, formLogIn, setFormLogIn) => {
-    // This avoid page reload
-    event.preventDefault();
-
-    setUserLogInError(null);
-    if (formLogIn.pseudo === '') {
-      console.error("Un nom d'utilisateur est requis");
-      return;
-    }
-
-    if (getUserPseudo().toString()) {
-      alert("Vous êtes déjà connecté en tant que " + getUserPseudo().toString() + ". \nDéconnectez vous pour vous connecter à un autre utilisateur.");
-      return;
-    }
-
-    axios
-      .post(`${import.meta.env.VITE_BACKDEND_URL}/users/login`, formLogIn)
-      .then((response) => {
-        document.cookie = `user=${response.data[0].id}; SameSite=None; Secure`;
-        document.cookie = `pseudo=${response.data[0].pseudo}; SameSite=None; Secure`;
-        location.reload();
-        displayLogInSuccessMessage();
-        setFormLogIn(DEFAULT_FORM_LOG_IN);
-      })
-      .catch((error) => {
-        console.log(error)
-        setUserLogInError(error.response.data.message);
-        console.error("erreur : ", error.response.data.message);
-      });
-  };
-
-  return { logIn, userLogInError, userLogInSuccess };
-};
-
 function UserForm() {
   const params = useParams();
   var pseudo = '';
@@ -107,19 +74,56 @@ function UserForm() {
     pseudo = params.pseudo
   ) : pseudo = ''
 
-  const DEFAULT_FORM_SIGN_IN = {
-    email: '',
-    firstname: '',
-    lastname: '',
-    pseudo: '',
-    age: '',
-    passwd: '',
-    passwd2: '',
-  };
-
   const DEFAULT_FORM_LOG_IN = {
     pseudo: pseudo,
     passwd: '',
+  };
+
+
+  const useLogIn = () => {
+    const [userLogInError, setUserLogInError] = useState(null);
+    const [userLogInSuccess, setUserLogInSuccess] = useState(null);
+    const displayLogInSuccessMessage = () => {
+      setUserLogInSuccess('Connexion réussie');
+      setTimeout(() => {
+        setUserLogInSuccess(null);
+      }, 3000);
+    };
+
+    const navigate = useNavigate()
+
+    const logIn = (event, formLogIn, setFormLogIn) => {
+      // This avoid page reload
+      event.preventDefault();
+
+      setUserLogInError(null);
+      if (formLogIn.pseudo === '') {
+        setUserLogInError("Un nom d'utilisateur est requis");
+        return;
+      }
+
+      if (getUserPseudo().toString()) {
+        alert("Vous êtes déjà connecté en tant que " + getUserPseudo().toString() + ". \nDéconnectez vous pour vous connecter à un autre utilisateur.");
+        return;
+      }
+
+      axios
+        .post(`${import.meta.env.VITE_BACKDEND_URL}/users/login`, formLogIn)
+        .then((response) => {
+          document.cookie = `user=${response.data[0].id}; SameSite=None; Secure`;
+          document.cookie = `pseudo=${response.data[0].pseudo}; SameSite=None; Secure`;
+          navigate('/');
+          displayLogInSuccessMessage();
+          setFormLogIn(DEFAULT_FORM_LOG_IN);
+        })
+        .catch((error) => {
+          console.log(error)
+          setUserLogInError(error.response.data.message);
+          console.error("erreur : ", error.response.data.message);
+        });
+    };
+
+    return { logIn, userLogInError, userLogInSuccess };
   };
 
   const [formLogIn, setFormLogIn] = useState(DEFAULT_FORM_LOG_IN);

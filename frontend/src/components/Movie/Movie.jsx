@@ -11,7 +11,7 @@ function Movie({ movie }) {
                 <img src={"https://image.tmdb.org/t/p/w300" + movie.poster_path} className="movie-poster" alt="logo" title={movie.overview}
                 />
             ) :
-                <div  className="movie-poster no-poster"> Aucune couverture </div>
+                <div  className="movie-poster no-poster"> {movie.title} </div>
             }
             <div className="movie-title" >
                 {movie.title}

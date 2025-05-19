@@ -34,18 +34,21 @@ function MovieDetails() {
   const [movieDetails, setMovieDetails] = useState([]);
   const [genreNames, setGenreNames] = useState([]);
   const [commentsList, setCommentsList] = useState([]);
+  const [commentError, setCommentError] = useState(null);
+  const displayErrorMessage = () => {
+    setTimeout(() => {
+      setCommentError(null);
+    }, 3000);
+  };
 
   useEffect(() => {
     (async () => {
       const movies = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/movies/get-a-movie/${params.id}`);
       setMovieDetails(movies.data.results[0])
-      console.log("get movies", movies.data.results[0])
       const comments = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/comments/get-comments/${params.id}/${getUserID()}`);
       setCommentsList(comments.data.results)
-      console.log("get comments", comments.data.results)
       const genres = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/genres/get-genres/${movies.data.results[0].genre_id1}/${movies.data.results[0].genre_id2}/${movies.data.results[0].genre_id3}/${movies.data.results[0].genre_id4}`)
       setGenreNames(genres.data.results)
-      console.log(genres.data.results)
     })()
   }, [])
 
@@ -68,31 +71,35 @@ function MovieDetails() {
   }
 
   const addingNote = (movieID) => {
+
     var user = "";
     var comment = "";
     if (getUserID().toString()) {
       user = getUserID()
       comment = prompt("Ajouter un commentaire ce film", "Commentaire");
-      axios
-        .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/add-comment`, { comment: `${comment}`, user: `${user}`, movie: `${movieID}` })
-        .then(() => {
-          console.log("success");
-        })
-        .catch((error) => {
-          setMovieError("Une erreur est survenue lors de l'enregistrement du commentaire.");
-          console.error(error);
-        })
-      location.reload();
+      if (comment) {
+        axios
+          .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/add-comment`, { comment: `${comment}`, user: `${user}`, movie: `${movieID}` })
+          .then(() => {
+          })
+          .catch((error) => {
+            setMovieError("Une erreur est survenue lors de l'enregistrement du commentaire.");
+            console.error(error);
+          })
+        navigate(`/details/${params.id}`);
+      }
     } else {
-      alert("Il faut être connecté pour poster un commentaire");
+      setCommentError("Il faut être connecté pour poster un commentaire");
+      displayErrorMessage();
     }
+    return [commentError]
   }
 
   const deletingNote = (commentID) => {
     if (confirm(`La suppression est définitive, êtes-vous sûre de vouloir supprimer ce commentaire de ${getUserPseudo()} ?`)) {
       axios
         .delete(`${import.meta.env.VITE_BACKDEND_URL}/comments/delete-a-comment/${commentID}`)
-      location.reload();
+      navigate(`/details/${params.id}`);
     }
   }
 
@@ -107,14 +114,14 @@ function MovieDetails() {
             <img src={"https://image.tmdb.org/t/p/w300" + movieDetails.poster_path} className="movie-poster" alt="logo"
             />
           ) :
-            <div className="movie-poster no-poster"> Aucune couverture </div>
+            <div className="movie-poster no-poster"> {movieDetails.title} </div>
           }
 
           {
             stars
               .filter(filterLike)
               .map((number) => {
-                return <div>
+                return <div key={number}>
                   <span className='star movie-details-star'>{starslist[number - 1][0]}</span>
                   <span className='star'>{starslist[number - 1][1]}</span>
                 </div>
@@ -124,7 +131,7 @@ function MovieDetails() {
         <div className="movie-lexical-container">
           <div className='movie-detail-title'>{movieDetails.title}</div>
           <div className="movies-info-line-container">
-            <p className="movie-detail-date">{date.getFullYear()}</p>
+            <p className="movie-detail-date">{date.getFullYear().toString()}</p>
             <p className="movie-detail-time">
               {Math.floor(movieDetails.runtime / 60) != "0" ?
                 (Math.floor(movieDetails.runtime / 60) + "h" + movieDetails.runtime % 60 + "min") : movieDetails.runtime % 60 + "min"}
@@ -134,7 +141,7 @@ function MovieDetails() {
               ? (
                 genreNames
                   .map((genre) => {
-                    return <p className="movie-detail-genre">{(genre.name)}</p>
+                    return <p key={genre.id} className="movie-detail-genre">{(genre.name)}</p>
                   })
               ) : <p></p>
             }
@@ -148,7 +155,7 @@ function MovieDetails() {
             ? (
               commentsList
                 .map((comment) => {
-                  return <div className="movie-detail-comment-container">
+                  return <div key={comment.id} className="movie-detail-comment-container">
                     <span className='movie-detail-comment movie-detail-user'>
                       {getUserPseudo()}
                     </span>
@@ -164,7 +171,7 @@ function MovieDetails() {
                     />
                   </div>
                 })
-            ) : <div>{console.log("no comment")}</div>
+            ) : <div></div>
           }
           <input
             className="movie-detail-note-button add-note"
@@ -173,6 +180,9 @@ function MovieDetails() {
             value="+ Note"
             title="Ajouter un commentaire sur le film"
           />
+          {commentError !== null && (
+            <div className="error-text">{commentError}</div>
+          )}
         </div>
       </div>
       <div className="movie-sup-container">

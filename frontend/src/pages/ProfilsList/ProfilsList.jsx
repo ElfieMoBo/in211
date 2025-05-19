@@ -23,7 +23,6 @@ function displayProfils() {
         (async () => {
             const users = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/users`);
             setUsersList(users.data.users);
-            console.log(users.data.users);
         })()
     }, []);
 
@@ -33,8 +32,7 @@ function displayProfils() {
     const signoff = () => {
         cookieDel("user")
         cookieDel("pseudo")
-        location.reload();
-        console.log(document.cookie)
+        navigate('/')
     }
 
     return (

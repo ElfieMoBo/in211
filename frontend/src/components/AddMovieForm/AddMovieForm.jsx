@@ -14,7 +14,7 @@ const getUserID = () => {
 
 const DEFAULT_FORM_VALUES = {
     title: '',
-    release_date: new Date(),
+    release_date: new Date,
     overview: '',
     poster_path: '',
     limited_age: 7,
@@ -77,7 +77,6 @@ const useFetchGenre = () => {
             .get(`${import.meta.env.VITE_BACKDEND_URL}/genres`)
             .then((reponse) => {
                 setGenreList(reponse.data.results)
-                console.log(reponse)
             })
             .catch((error) => {
                 console.log(error)
@@ -210,7 +209,7 @@ function AddMovieForm() {
                                 return <input
                                     className="add-movie-star"
                                     type="button"
-                                    id={number}
+                                    key={number}
                                     value="★"
                                     onClick={() =>
                                         colorStar(number)
@@ -226,10 +225,10 @@ function AddMovieForm() {
                 </div>
             </form>
             {movieSuccess !== null && (
-                <div className="movie-creation-success">{movieSuccess}</div>
+                <div className="success-text">{movieSuccess}</div>
             )}
             {movieError !== null && (
-                <div className="movie-creation-error">{movieError}</div>
+                <div className="error-text">{movieError}</div>
             )}
         </div>
     );

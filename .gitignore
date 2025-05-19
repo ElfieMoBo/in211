@@ -1,3 +1,13 @@
+.gitignore
 frontend/.env
 .env
 node_modules
+.vercel
+build.bash
+userstory.md
+movie1.json
+movie2.json
+movie3.json
+movie4.json
+movie5.json
+populate.bash

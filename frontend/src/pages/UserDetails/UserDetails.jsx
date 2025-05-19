@@ -32,19 +32,16 @@ function UserDetails() {
     const signoff = () => {
         cookieDel("user")
         cookieDel("pseudo")
-        location.reload();
-        console.log(document.cookie)
+        navigate('/');
     }
     const confirmDelete = (userID) => {
         if (confirm("La suppression est définitive, êtes-vous sûre de vouloir supprimer cet utilisateur ?")) {
             signoff()
             deleteUserID(userID)
-            console.log("delete user")
             navigate('/profils')
         }
     };
 
-    console.log(pseudo)
     useEffect(() => {
         (async () => {
             const user = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/users/user-by-pseudo/${pseudo}`);
@@ -72,7 +69,6 @@ function UserDetails() {
                                 {user.firstname} {user.lastname.toString().toUpperCase()}
                             </span>
                         ) : <span>
-                            {console.log("user", user)}
                         </span>}
 
                     <p className="movie-detail-age"> {user.age} </p>
