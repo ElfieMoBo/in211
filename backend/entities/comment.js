@@ -10,6 +10,7 @@ const Comment = new typeorm.EntitySchema({
         },
         movie_id: { type: String, },
         user_id: { type: String },
+        user_pseudo: { type: String },
         comment: {
             type: String,
             nullable: true,

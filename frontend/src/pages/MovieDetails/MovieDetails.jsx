@@ -24,7 +24,7 @@ const getUserID = () => {
   return document.cookie.split(";").filter(filterCookieU).toString().split("=").filter(filterIDU)
 }
 const getUserPseudo = () => {
-  return document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)
+  return document.cookie.split(";").filter(filterCookieP).toString().split("=").filter(filterIDP)[0]
 }
 
 
@@ -34,10 +34,12 @@ function MovieDetails() {
   const [movieDetails, setMovieDetails] = useState([]);
   const [genreNames, setGenreNames] = useState([]);
   const [commentsList, setCommentsList] = useState([]);
-  const [commentError, setCommentError] = useState(null);
-  const displayErrorMessage = () => {
+  const [errorMessage, setErrorMessage] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null);
+  const displayMessage = () => {
     setTimeout(() => {
-      setCommentError(null);
+      setErrorMessage(null);
+      setSuccessMessage(null);
     }, 3000);
   };
 
@@ -45,7 +47,7 @@ function MovieDetails() {
     (async () => {
       const movies = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/movies/get-a-movie/${params.id}`);
       setMovieDetails(movies.data.results[0])
-      const comments = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/comments/get-comments/${params.id}/${getUserID()}`);
+      const comments = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/comments/get-comments/${params.id}`);
       setCommentsList(comments.data.results)
       const genres = await axios.get(`${import.meta.env.VITE_BACKDEND_URL}/genres/get-genres/${movies.data.results[0].genre_id1}/${movies.data.results[0].genre_id2}/${movies.data.results[0].genre_id3}/${movies.data.results[0].genre_id4}`)
       setGenreNames(genres.data.results)
@@ -64,22 +66,29 @@ function MovieDetails() {
   const navigate = useNavigate()
 
   const confirmDelete = (movieID) => {
-    if (confirm("La suppression est définitive, êtes-vous sûre de vouloir supprimer ce film ?")) {
-      deleteMovieID(movieID)
-      navigate('/');
+    if (getUserID().toString()) {
+      if (confirm("La suppression est définitive, êtes-vous sûre de vouloir supprimer ce film ?")) {
+        deleteMovieID(movieID)
+        navigate('/');
+      }
+    } else {
+      setErrorMessage("Il faut être connecté pour supprimer ce film");
+      displayMessage();
     }
   }
 
   const addingNote = (movieID) => {
-
     var user = "";
+    var pseudo = "";
     var comment = "";
     if (getUserID().toString()) {
-      user = getUserID()
+      user = getUserID();
+      pseudo = getUserPseudo();
+      console.log("pseudo", pseudo)
       comment = prompt("Ajouter un commentaire ce film", "Commentaire");
       if (comment) {
         axios
-          .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/add-comment`, { comment: `${comment}`, user: `${user}`, movie: `${movieID}` })
+          .post(`${import.meta.env.VITE_BACKDEND_URL}/comments/add-comment`, { comment: `${comment}`, user: `${user}`, pseudo: `${pseudo}`, movie: `${movieID}` })
           .then(() => {
           })
           .catch((error) => {
@@ -89,18 +98,27 @@ function MovieDetails() {
         navigate(`/details/${params.id}`);
       }
     } else {
-      setCommentError("Il faut être connecté pour poster un commentaire");
-      displayErrorMessage();
+      setErrorMessage("Il faut être connecté pour poster un commentaire");
+      displayMessage();
     }
-    return [commentError]
+    // return [commentPostError]
   }
 
-  const deletingNote = (commentID) => {
-    if (confirm(`La suppression est définitive, êtes-vous sûre de vouloir supprimer ce commentaire de ${getUserPseudo()} ?`)) {
-      axios
-        .delete(`${import.meta.env.VITE_BACKDEND_URL}/comments/delete-a-comment/${commentID}`)
-      navigate(`/details/${params.id}`);
+  const deletingNote = (commentID, commentUser, commentPseudo) => {
+    if (getUserID() == commentUser) {
+      if (confirm(`La suppression est définitive, êtes-vous sûre de vouloir supprimer ce commentaire de ${getUserPseudo()} ?`)) {
+        axios
+          .delete(`${import.meta.env.VITE_BACKDEND_URL}/comments/delete-a-comment/${commentID}`)
+        navigate(`/details/${params.id}`);
+        setSuccessMessage("Le commentaire a bien été supprimé");
+        displayMessage();
+      }
+    } else {
+
+      setErrorMessage(`Il faut être connecté au compte ${commentPseudo} pour supprimer ce commentaire`);
+      displayMessage();
     }
+    // return [commentDeleteError]
   }
 
 
@@ -157,14 +175,14 @@ function MovieDetails() {
                 .map((comment) => {
                   return <div key={comment.id} className="movie-detail-comment-container">
                     <span className='movie-detail-comment movie-detail-user'>
-                      {getUserPseudo()}
+                      {comment.user_pseudo}
                     </span>
                     <span className="movie-detail-comment">
                       {comment.comment}
                     </span>
                     <input
                       className="movie-detail-note-button delete-note"
-                      onClick={() => deletingNote(comment.id)}
+                      onClick={() => deletingNote(comment.id, comment.user_id, comment.user_pseudo)}
                       type="button"
                       value="- Note"
                       title="Supprimer ce commentaire sur le film"
@@ -180,8 +198,11 @@ function MovieDetails() {
             value="+ Note"
             title="Ajouter un commentaire sur le film"
           />
-          {commentError !== null && (
-            <div className="error-text">{commentError}</div>
+          {errorMessage !== null && (
+            <div className="error-text">{errorMessage}</div>
+          )}
+          {successMessage !== null && (
+            <div className="success-text">{successMessage}</div>
           )}
         </div>
       </div>

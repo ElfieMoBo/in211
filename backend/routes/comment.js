@@ -17,13 +17,12 @@ router.get("/", function (req, res) {
         });
 });
 
-router.get("/get-comments/:movieID/:userID", function (req, res) {
+router.get("/get-comments/:movieID", function (req, res) {
     appDataSource
         .getRepository(Comment)
         .find({
             where: {
                 movie_id: req.params.movieID,
-                user_id: req.params.userID
             }
         })
         .then(function (comments) {
@@ -42,6 +41,7 @@ router.post('/add-comment', function (req, res) {
     const newComment = movieRepository.create({
         movie_id: req.body.movie,
         user_id: req.body.user,
+        user_pseudo: req.body.pseudo,
         comment: req.body.comment,
     });
     // Inserting this new movie in the BDD
